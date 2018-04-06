@@ -1,0 +1,8 @@
+.idea/ 
+__pycache__/
+*.py[cod]
+.project
+.pydevproject
+.DS_Store
+.wpr
+.wpu
