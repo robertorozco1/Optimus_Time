@@ -1,20 +1,20 @@
 CREATE TABLE `User` (
 	`fname` varchar(25) NOT NULL,
 	`lname` varchar(25) NOT NULL,
-	`employee_id` int NOT NULL UNIQUE,
-	`role_id`  NOT NULL,
+	`employee_id` INT NOT NULL UNIQUE,
+	`role_id` INT NOT NULL,
 	`hours_week` INT NOT NULL,
 	PRIMARY KEY (`employee_id`)
 );
 
 CREATE TABLE `Role` (
-	`role_id` int NOT NULL UNIQUE,
+	`role_id` INT NOT NULL UNIQUE,
 	`rolename` varchar(10) NOT NULL,
 	PRIMARY KEY (`role_id`)
 );
 
 CREATE TABLE `Individual Schedule` (
-	`employee_id`  NOT NULL,
+	`employee_id`  INT NOT NULL,
 	`monday` varchar(255) NOT NULL,
 	`tuesday` varchar(255) NOT NULL,
 	`wednesday` varchar(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE `Individual Schedule` (
 );
 
 CREATE TABLE `Work Schedule` (
-	`Week` int NOT NULL,
+	`Week` INT NOT NULL,
 	`monday` BINARY NOT NULL,
 	`tuesday` BINARY NOT NULL,
 	`wednesday` BINARY NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `Work Schedule` (
 );
 
 CREATE TABLE `TimeOff` (
-	`employee_id`  NOT NULL,
+	`employee_id`  INT NOT NULL,
 	`date` DATE NOT NULL,
 	`status` BOOLEAN,
 	`hours` INT NOT NULL,
@@ -50,4 +50,3 @@ ALTER TABLE `User` ADD CONSTRAINT `User_fk0` FOREIGN KEY (`role_id`) REFERENCES 
 ALTER TABLE `Individual Schedule` ADD CONSTRAINT `Individual Schedule_fk0` FOREIGN KEY (`employee_id`) REFERENCES `User`(`employee_id`);
 
 ALTER TABLE `TimeOff` ADD CONSTRAINT `TimeOff_fk0` FOREIGN KEY (`employee_id`) REFERENCES `User`(`employee_id`);
-
