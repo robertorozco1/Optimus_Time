@@ -1,8 +1,8 @@
 class HourMinute:
 
     def __init__(self, hour: int, minute: int):
-        self.__hour = 0
-        self.__minute = 0
+        self.__hour = None
+        self.__minute = None
 
         self.hour = hour
         self.minute = minute
@@ -19,13 +19,17 @@ class HourMinute:
     def _get_hour(self):
         return self.__hour
 
-    def _set_hour(self, hour: range(0, 24)):
+    def _set_hour(self, hour):
+        if hour not in range(0, 24):
+            raise ValueError("Hour value should be in the range of 0 to 24")
         self.__hour = hour
 
     def _get_minute(self):
         return self.__minute
 
-    def _set_minute(self, minute: range(0, 24)):
+    def _set_minute(self, minute):
+        if minute not in range(0, 60):
+            raise ValueError("Minute value should be in the range of 0 to 60")
         self.__minute = minute
 
     hour = property(_get_hour, _set_hour)
@@ -34,6 +38,7 @@ class HourMinute:
 
 if __name__ == "__main__":
     a = HourMinute(7, 30)
-    b = HourMinute(16, 0)
+    b = HourMinute(16, 45)
+    print(b)
     c = a-b
     print(c)
