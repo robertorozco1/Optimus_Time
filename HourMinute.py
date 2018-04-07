@@ -2,22 +2,23 @@ MINUTESINHOUR = 60
 
 class HourMinute:
 
-    def __init__(self, hour: int=0, minute: int=0):
+    def __init__(self, hour=0, minute: int=0):
         self.__hour = None
         self.__minute = None
 
-        self.hour = hour
-        self.minute = minute
+        if hour is None:
+            self._set_totalminutes(minute)
+        else:
+            self.hour = hour
+            self.minute = minute
 
     def __add__(self, other):
-        result = HourMinute()
-        result.totalminutes = self.totalminutes + other.totalminutes
-        return result
+        totalminutes = self.totalminutes + other.totalminutes
+        return HourMinute(None, totalminutes)
 
     def __sub__(self, other):
-        result = HourMinute()
-        result.totalminutes = self.totalminutes - other.totalminutes
-        return result
+        totalminutes = abs(self.totalminutes - other.totalminutes)
+        return HourMinute(None, totalminutes)
 
     def __lt__(self, other):
         return self.totalminutes < other.totalminutes
