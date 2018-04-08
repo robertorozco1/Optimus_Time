@@ -13,7 +13,7 @@ CREATE TABLE `Role` (
 	PRIMARY KEY (`role_id`)
 );
 
-CREATE TABLE `Individual Availability` (
+CREATE TABLE `Individual_Availability` (
 	`employee_id`  INT NOT NULL,
 	`monday` varchar(255) NOT NULL,
 	`tuesday` varchar(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `Individual Availability` (
 	PRIMARY KEY (`employee_id`)
 );
 
-CREATE TABLE `Work Schedule` (
+CREATE TABLE `Work_Schedule` (
 	`Week` INT NOT NULL,
 	`monday` BINARY NOT NULL,
 	`tuesday` BINARY NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `Work Schedule` (
 	PRIMARY KEY (`Week`)
 );
 
-CREATE TABLE `TimeOff` (
+CREATE TABLE `Time_Off` (
 	`employee_id`  INT NOT NULL,
 	`date` DATE NOT NULL,
 	`status` BOOLEAN,
