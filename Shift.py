@@ -12,8 +12,6 @@ class Shift:
         self.employeeid = employeeid
         start = self.__validateshift__(start)
         end = self.__validateshift__(end)
-        if start > end:
-            raise ValueError("Shift start time must be less than shift end time")
         self.start = start
         self.end = end
 
@@ -30,7 +28,7 @@ class Shift:
             raise ValueError("A day cannot have more than 24 hours")
         return shift
 
-    def _get_duration(self) -> HourMinute:
+    def duration(self) -> HourMinute:
         return self.end - self.start
 
     def _set_employeeid(self, employeeid: int):
@@ -39,13 +37,23 @@ class Shift:
     def _get_employeeid(self):
         return self.__employeeid
 
-    def _set_start(self, start: HourMinute):
+    def _set_start(self, start):
+        if type(start) is not HourMinute:
+            start = HourMinute(*start)
+        if self.end is not None:
+            if self.end < start:
+                raise ValueError("Shift start time must be less than shift end time")
         self.__start = start
 
     def _get_start(self):
         return self.__start
 
-    def _set_end(self, end: HourMinute):
+    def _set_end(self, end):
+        if type(end) is not HourMinute:
+            end = HourMinute(*end)
+        if self.start is not None:
+            if self.start > end:
+                raise ValueError("Shift end time must be greater than shift start time")
         self.__end = end
 
     def _get_end(self):
@@ -54,9 +62,9 @@ class Shift:
     employeeid = property(_get_employeeid, _set_employeeid)
     start = property(_get_start, _set_start)
     end = property(_get_end, _set_end)
-    duration = property(_get_duration)
 
 
 if __name__ == "__main__":
     a = Shift(0, (5, 30), (14, 45))
-    print(a.duration)
+    a.end = (12, 30)
+    print(a.duration())

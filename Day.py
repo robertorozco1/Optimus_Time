@@ -14,6 +14,19 @@ class Day:
     def __repr__(self):
         return str((self.weekday, self.shifts))
 
+    def employeeday(self, employeeid):
+        employeeshifts = []
+        for shift in self.shifts:
+            if shift.employeeid == employeeid:
+                employeeshifts.append(shift)
+        return Day(self.weekday, *employeeshifts)
+
+    def totaltime(self):
+        totaltime = HourMinute()
+        for shift in self.shifts:
+            totaltime = totaltime + shift.duration()
+        return totaltime
+
     def _set_weekday(self, weekday: int):
         if type(weekday) is not int:
             raise TypeError("Weekday must be of type int")
@@ -34,22 +47,8 @@ class Day:
     def _get_shifts(self):
         return self.__shifts
 
-    def _get_totaltime(self):
-        totaltime = HourMinute()
-        for shift in self.shifts:
-            totaltime = totaltime + shift.duration
-        return totaltime
-
-    def employeeday(self, employeeid):
-        employeeshifts = []
-        for shift in self.shifts:
-            if shift.employeeid == employeeid:
-                employeeshifts.append(shift)
-        return Day(self.weekday, *employeeshifts)
-
     weekday = property(_get_weekday, _set_weekday)
     shifts = property(_get_shifts, _set_shifts)
-    totaltime = property(_get_totaltime)
 
 
 if __name__ == "__main__":
