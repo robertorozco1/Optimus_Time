@@ -1,12 +1,12 @@
 from Scheduling.Day import Day
 INITIALSTATE = [
-    ('0', None),
-    ('1', None),
-    ('2', None),
-    ('3', None),
-    ('4', None),
-    ('5', None),
-    ('6', None)
+    (0, None),
+    (1, None),
+    (2, None),
+    (3, None),
+    (4, None),
+    (5, None),
+    (6, None)
 ]
 
 
@@ -22,7 +22,7 @@ class Week(dict):
             raise TypeError("Key must be of type Day")
         if not self.__contains__(key):
             raise KeyError("Keys must be day of week")
-        if value.weekday != int(key):
+        if value.weekday != key:
             raise ValueError("Weekday must be same value of ")
         super(Week, self).__setitem__(key, value)
 
@@ -58,6 +58,6 @@ class Week(dict):
 
 if __name__ == "__main__":
     a = Week()
-    a['0'] = Day(0)
+    a[0] = Day(0)
     print(a.items())
     print(a.copy())

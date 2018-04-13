@@ -67,4 +67,4 @@ class Shift:
 if __name__ == "__main__":
     a = Shift(0, (5, 30), (14, 45))
     a.end = (12, 30)
-    print(a.duration())
+    print(a)

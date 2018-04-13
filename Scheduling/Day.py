@@ -8,6 +8,8 @@ class Day:
         self.__weekday = None
         self.__shifts = None
 
+        shifts = set(shifts)
+
         self.weekday = weekday
         self.shifts = shifts
 
@@ -38,8 +40,8 @@ class Day:
         return self.__weekday
 
     def _set_shifts(self, shifts):
-        if type(shifts) is not tuple:
-            raise TypeError("Shifts must be a tuple")
+        if type(shifts) is not set:
+            raise TypeError("Shifts must be in a set")
         if any(not isinstance(shift, Shift) for shift in shifts):
             raise TypeError("All values must be of type Shift")
         self.__shifts = shifts

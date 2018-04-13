@@ -3,10 +3,11 @@ from Scheduling.Week import Week
 
 class ScheduleWeek:
 
-    def __init__(self, weekid: int, week):
+    def __init__(self, weekid: int, week=None):
         self.__weeknumber = None
         self.__week = None
 
+        week = Week(week)
         self.weekid = weekid
         self.week = week
 
