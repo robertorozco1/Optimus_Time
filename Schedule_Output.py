@@ -3,7 +3,7 @@ import pymysql
 app = Flask(__name__)
 
 def connect():
-    conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='dummydata')
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='', db='dummydata')
     c = conn.cursor()
     return conn, c
 

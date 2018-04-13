@@ -1,4 +1,4 @@
-from HourMinute import HourMinute
+from Scheduling.HourMinute import HourMinute
 
 
 class Shift:

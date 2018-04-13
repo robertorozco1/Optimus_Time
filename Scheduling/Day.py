@@ -1,5 +1,5 @@
-from Shift import Shift
-from HourMinute import HourMinute
+from Scheduling.Shift import Shift
+from Scheduling.HourMinute import HourMinute
 
 
 class Day:
@@ -59,4 +59,4 @@ if __name__ == "__main__":
     e = Shift(2, (6, 0), (23, 59))
 
     aday = Day(0, a, b, c, d, e)
-    print(aday.employeeday(0))
+    print(aday)
