@@ -16,6 +16,12 @@ class Day:
     def __repr__(self):
         return str((self.weekday, self.shifts))
 
+    def employeelist(self):
+        employeeset = set()
+        for shift in self.shifts:
+            employeeset.add(shift.employeeid)
+        return list(employeeset)
+
     def employeeday(self, employeeid):
         employeeshifts = []
         for shift in self.shifts:
@@ -61,4 +67,4 @@ if __name__ == "__main__":
     e = Shift(2, (6, 0), (23, 59))
 
     aday = Day(0, a, b, c, d, e)
-    print(aday)
+    print(aday.employeelist())

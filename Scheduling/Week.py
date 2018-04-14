@@ -1,13 +1,5 @@
 from Scheduling.Day import Day
-INITIALSTATE = [
-    (0, None),
-    (1, None),
-    (2, None),
-    (3, None),
-    (4, None),
-    (5, None),
-    (6, None)
-]
+INITIALSTATE = {0: None, 1: None, 2: None, 3: None, 4: None, 5: None, 6: None}
 
 
 class Week(dict):
@@ -41,8 +33,9 @@ class Week(dict):
     def update(self, other):
         if type(other) is not dict:
             other = dict(other)
-        if other.keys() == self.keys():
-            super(Week, self).update(other)
+        if not all(key in self.keys() for key in other.keys()):
+            raise KeyError("Keys for week must be 0-6, representing days of the week")
+        super(Week, self).update(other)
 
     @staticmethod
     def fromkeys():
@@ -60,4 +53,4 @@ if __name__ == "__main__":
     a = Week()
     a[0] = Day(0)
     print(a.items())
-    print(a.copy())
+    print(a.keys())

@@ -7,10 +7,10 @@ db = sqlite3.connect(":memory:")
 script = open("./dummydata.sql").read()
 db.executescript(script)
 
-aweek = Scheduling.ScheduleWeek(0)
+aweek = Scheduling.Schedule(0)
 
 for item in DAYS.items():
-    query = "Select Availability.employee_id, Availability.{0} From Availability Where employee_id=3".format(item[1])
+    query = "Select Availability.employee_id, Availability.{0} From Availability".format(item[1])
     out = db.execute(query)
     shifts = out.fetchall()
     aday = Scheduling.Day(item[0])
@@ -21,6 +21,6 @@ for item in DAYS.items():
         aday.shifts.add(ashift)
     aweek.week[item[0]] = aday
 
-for day in aweek.week.values():
-    print(day)
+print(aweek)
+
 

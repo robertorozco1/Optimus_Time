@@ -1,7 +1,7 @@
 from Scheduling.Week import Week
 
 
-class ScheduleWeek:
+class Schedule:
 
     def __init__(self, weekid: int, week=None):
         self.__weeknumber = None
@@ -13,6 +13,18 @@ class ScheduleWeek:
 
     def __repr__(self):
         return str((self.weekid, self.week))
+
+    def employeeweek(self, employeeid):
+        employeeweek = Week()
+        for item in self.week.items():
+            employeeweek.update({item[0]: item[1].employeeday(employeeid)})
+        return employeeweek
+
+    def employeelist(self):
+        employeelist = []
+        for day in self.week.values():
+            employeelist.append(day.employeelist())
+        return employeelist
 
     def _set_weekid(self, weekid: int):
         if type(weekid) is not int:
@@ -29,4 +41,3 @@ class ScheduleWeek:
 
     def _get_week(self):
         return self.__week
-
