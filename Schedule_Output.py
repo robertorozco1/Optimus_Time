@@ -1,21 +1,20 @@
 from flask import Flask, render_template
-import pymysql
+import sqlite3
 app = Flask(__name__)
 
 def connect():
-    conn = pymysql.connect(host='127.0.0.1', user='root', password='', db='dummydata')
-    c = conn.cursor()
-    return conn, c
+    db = sqlite3.connect(":memory:")
+    script = open("./dummydata.sql").read()
+    db.executescript(script)
+    return db
 
 @app.route('/')
 def show_tables():
-    conn, c = connect()
-    query = "SELECT concat(lname, ', ', fname)AS name, sunday, monday, tuesday, wednesday, thursday, friday, saturday FROM user, individual_availability WHERE user.employee_id=individual_availability.employee_id"
-    
-    c.execute(query)
+    c = connect()
+    query = "Select Availability.employee_id, Availability.* From Availability"
+    out = c.execute(query)
 
-    data=c.fetchall()
-    conn.close()
+    data = out.fetchall()
     
     return render_template('index.html', the_data=data)
     
