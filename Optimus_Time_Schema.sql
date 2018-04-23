@@ -13,7 +13,7 @@ CREATE TABLE `Role` (
 	PRIMARY KEY (`role_id`)
 );
 
-CREATE TABLE `Individual_Availability` (
+CREATE TABLE `Availability` (
 	`employee_id`  INT NOT NULL,
 	`monday` varchar(255) NOT NULL,
 	`tuesday` varchar(255) NOT NULL,

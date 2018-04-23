@@ -1,8 +1,9 @@
 MINUTESINHOUR = 60
 
+
 class HourMinute:
 
-    def __init__(self, hour=0, minute: int=0):
+    def __init__(self, hour=0, minute=0):
         self.__hour = None
         self.__minute = None
 
@@ -39,6 +40,9 @@ class HourMinute:
         return self.totalminutes != other.totalminutes
 
     def __repr__(self):
+        return str((self.hour, self.minute))
+
+    def __str__(self):
         return str(self.hour) + ":" + str(self.minute)
 
     def _get_hour(self):
