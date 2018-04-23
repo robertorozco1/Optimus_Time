@@ -4,17 +4,14 @@ from Scheduling.HourMinute import HourMinute
 
 class Day:
 
-    def __init__(self, weekday: int, *shifts):
-        self.__weekday = None
+    def __init__(self, *shifts):
         self.__shifts = None
 
         shifts = set(shifts)
-
-        self.weekday = weekday
         self.shifts = shifts
 
     def __repr__(self):
-        return str((self.weekday, self.shifts))
+        return str(self.shifts)
 
     def employeelist(self):
         employeeset = set()
@@ -35,16 +32,6 @@ class Day:
             totaltime = totaltime + shift.duration()
         return totaltime
 
-    def _set_weekday(self, weekday: int):
-        if type(weekday) is not int:
-            raise TypeError("Weekday must be of type int")
-        if weekday not in range(0, 7):
-            raise ValueError("Invalid weekday number. Must be in the range of 0 to 7")
-        self.__weekday = weekday
-
-    def _get_weekday(self):
-        return self.__weekday
-
     def _set_shifts(self, shifts):
         if type(shifts) is not set:
             raise TypeError("Shifts must be in a set")
@@ -55,7 +42,6 @@ class Day:
     def _get_shifts(self):
         return self.__shifts
 
-    weekday = property(_get_weekday, _set_weekday)
     shifts = property(_get_shifts, _set_shifts)
 
 

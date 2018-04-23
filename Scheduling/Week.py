@@ -14,8 +14,6 @@ class Week(dict):
             raise TypeError("Key must be of type Day")
         if not self.__contains__(key):
             raise KeyError("Keys must be day of week")
-        if value.weekday != key:
-            raise ValueError("Weekday must be same value of ")
         super(Week, self).__setitem__(key, value)
 
     @staticmethod
@@ -48,9 +46,65 @@ class Week(dict):
     def copy(self):
         return Week(self.items())
 
+    @property
+    def sunday(self):
+        return super(Week, self).__getitem__(0)
+
+    @sunday.setter
+    def sunday(self, value):
+        self.__setitem__(0, value)
+
+    @property
+    def monday(self):
+        return super(Week, self).__getitem__(1)
+
+    @monday.setter
+    def monday(self, value):
+        self.__setitem__(1, value)
+
+    @property
+    def tuesday(self):
+        return super(Week, self).__getitem__(2)
+
+    @tuesday.setter
+    def tuesday(self, value):
+        self.__setitem__(2, value)
+
+    @property
+    def wednesday(self):
+        return super(Week, self).__getitem__(3)
+
+    @wednesday.setter
+    def wednesday(self, value):
+        self.__setitem__(3, value)
+
+    @property
+    def thursday(self):
+        return super(Week, self).__getitem__(4)
+
+    @thursday.setter
+    def thursday(self, value):
+        self.__setitem__(4, value)
+
+    @property
+    def friday(self):
+        return super(Week, self).__getitem__(5)
+
+    @friday.setter
+    def friday(self, value):
+        self.__setitem__(5, value)
+
+    @property
+    def saturday(self):
+        return super(Week, self).__getitem__(6)
+
+    @saturday.setter
+    def saturday(self, value):
+        self.__setitem__(6, value)
+
 
 if __name__ == "__main__":
     a = Week()
-    a[0] = Day(0)
+    a.sunday = Day()
     print(a.items())
-    print(a.keys())
+    print(a.sunday)
