@@ -15,25 +15,25 @@ CREATE TABLE `Role` (
 
 CREATE TABLE `Availability` (
 	`employee_id`  INT NOT NULL,
-	`monday` varchar(255) NOT NULL,
-	`tuesday` varchar(255) NOT NULL,
-	`wednesday` varchar(255) NOT NULL,
-	`thursday` varchar(255) NOT NULL,
-	`friday` varchar(255) NOT NULL,
-	`saturday` varchar(255) NOT NULL,
-	`sunday` varchar(255) NOT NULL,
+	`1` varchar(255) NOT NULL,
+	`2` varchar(255) NOT NULL,
+	`3` varchar(255) NOT NULL,
+	`4` varchar(255) NOT NULL,
+	`5` varchar(255) NOT NULL,
+	`6` varchar(255) NOT NULL,
+	`0` varchar(255) NOT NULL,
 	PRIMARY KEY (`employee_id`)
 );
 
 CREATE TABLE `Work_Schedule` (
 	`Week` INT NOT NULL,
-	`monday` BINARY NOT NULL,
-	`tuesday` BINARY NOT NULL,
-	`wednesday` BINARY NOT NULL,
-	`thursday` BINARY NOT NULL,
-	`friday` BINARY NOT NULL,
-	`saturday` BINARY NOT NULL,
-	`sunday` BINARY NOT NULL,
+	`1` BINARY NOT NULL,
+	`2` BINARY NOT NULL,
+	`3` BINARY NOT NULL,
+	`4` BINARY NOT NULL,
+	`5` BINARY NOT NULL,
+	`6` BINARY NOT NULL,
+	`0` BINARY NOT NULL,
 	PRIMARY KEY (`Week`)
 );
 
@@ -59,13 +59,13 @@ INSERT INTO `TimeOff` (`employee_id`,`date`,`status`,`hours`) VALUES (21,"2017-1
 INSERT INTO `TimeOff` (`employee_id`,`date`,`status`,`hours`) VALUES (31,"2018-02-27 23:39:08",2,5),(32,"2017-05-25 17:22:15",0,5),(33,"2018-12-16 00:45:28",0,2),(34,"2018-04-08 07:08:58",1,1),(35,"2018-11-20 08:38:47",2,7),(36,"2018-06-29 04:01:59",1,5),(37,"2018-01-10 22:05:00",0,5),(38,"2017-12-14 11:47:28",0,8),(39,"2017-07-21 00:41:02",2,4),(40,"2017-08-06 10:33:09",1,5);
 INSERT INTO `TimeOff` (`employee_id`,`date`,`status`,`hours`) VALUES (41,"2017-12-16 07:48:27",0,8),(42,"2018-10-19 11:46:03",1,2),(43,"2018-11-12 05:41:54",0,6),(44,"2017-10-23 12:03:29",2,8),(45,"2019-03-25 17:24:10",0,1),(46,"2018-05-20 03:06:56",0,8),(47,"2018-02-12 12:33:13",0,4),(48,"2018-07-11 05:50:57",2,6),(49,"2017-11-26 03:42:42",2,7),(50,"2017-08-26 11:07:23",0,0);
 
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (1, '6-8', '10-12', '22-24', '22-24', '8-10', '2-4', '4-6');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (2, '18-20', '16-18', '20-22', '2-4', '8-10', '2-4', '22-24');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (3, '12-14', '20-22', '8-10', '6-8', '16-18', '0-2', '14-16');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (4, '20-22', '12-14', '22-24', '22-24', '8-10', '20-22', '20-22');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (5, '20-22', '4-6', '6-8', '12-14', '8-10', '12-14', '2-4');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (6, '4-6', '12-14', '4-6', '12-14', '14-16', '16-18', '14-16');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (7, '6-8', '2-4', '16-18', '0-2', '12-14', '6-8', '14-16');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (8, '20-22', '4-6', '16-18', '22-24', '2-4', '0-2', '16-18');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (9, '2-4', '12-14', '16-18', '8-10', '10-12', '20-22', '4-6');
-INSERT INTO Availability (employee_id, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) values (10, '6-8', '10-12', '22-24', '22-24', '12-14', '10-12', '6-8');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (1, '6-8', '10-12', '22-24', '22-24', '8-10', '2-4', '4-6');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (2, '18-20', '16-18', '20-22', '2-4', '8-10', '2-4', '22-24');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (3, '12-14', '20-22', '8-10', '6-8', '16-18', '0-2', '14-16');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (4, '20-22', '12-14', '22-24', '22-24', '8-10', '20-22', '20-22');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (5, '20-22', '4-6', '6-8', '12-14', '8-10', '12-14', '2-4');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (6, '4-6', '12-14', '4-6', '12-14', '14-16', '16-18', '14-16');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (7, '6-8', '2-4', '16-18', '0-2', '12-14', '6-8', '14-16');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (8, '20-22', '4-6', '16-18', '22-24', '2-4', '0-2', '16-18');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (9, '2-4', '12-14', '16-18', '8-10', '10-12', '20-22', '4-6');
+INSERT INTO Availability (employee_id, 1, 2, 3, 4, 5, 6, 0) values (10, '6-8', '10-12', '22-24', '22-24', '12-14', '10-12', '6-8');
