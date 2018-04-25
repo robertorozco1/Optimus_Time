@@ -83,6 +83,20 @@ def makeasch():
 def hoursworked():
     return render_template('hoursworked.html')
 
+def time_off(employee_id)
+    conn, c = connect()
+    query = ("SELECT status FROM timeoff WHERE employee_id = " + employee_id)
+    c.execute(query)
+    status = c.fetchall()
+    if status == "NULL":
+        return "Pending"
+    elif status == "TRUE":
+        return "Approved"
+    elif status == "FALSE":
+        return "Denied"
+
+def login():
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
