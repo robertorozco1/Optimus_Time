@@ -1,14 +1,15 @@
 CREATE TABLE `User` (
-	`fname` varchar(25) NOT NULL,
-	`lname` varchar(25) NOT NULL,
-	`employee_id` INT NOT NULL UNIQUE,
-	`role_id` INT NOT NULL,
-	`hours_week` INT NOT NULL,
+  `fname` varchar(25) NOT NULL,
+  `lname` varchar(25) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `hours_week` int(11) NOT NULL,
+  `passwd` varchar(128) DEFAULT NULL,
 	PRIMARY KEY (`employee_id`)
 );
 
 CREATE TABLE `Role` (
-	`role_id` INT NOT NULL UNIQUE,
+	`role_id` INT(11) NOT NULL UNIQUE,
 	`rolename` varchar(10) NOT NULL,
 	PRIMARY KEY (`role_id`)
 );
@@ -46,11 +47,57 @@ CREATE TABLE `TimeOff` (
 );
 
 
-INSERT INTO `User` (`fname`,`lname`,`employee_id`,`role_id`,`hours_week`) VALUES ("Chaney","Ross",1,1,15),("Indigo","Cooke",2,4,36),("Micah","Garza",3,7,25),("Michelle","Peters",4,10,4),("Kamal","Gilmore",5,13,37),("Ursula","Boyle",6,16,28),("Thane","Webster",7,19,20),("Akeem","Kramer",8,22,19),("Jackson","Mcconnell",9,25,16),("April","Gonzales",10,28,7);
-INSERT INTO `User` (`fname`,`lname`,`employee_id`,`role_id`,`hours_week`) VALUES ("Buffy","Middleton",11,31,4),("Rana","Huber",12,34,25),("Colleen","Hansen",13,37,28),("Boris","Anthony",14,40,23),("Dai","Witt",15,43,4),("Iliana","Leach",16,46,2),("Erasmus","Haynes",17,49,30),("Madeline","Whitehead",18,52,24),("Deanna","Guerra",19,55,4),("Ivana","Knox",20,58,40);
-INSERT INTO `User` (`fname`,`lname`,`employee_id`,`role_id`,`hours_week`) VALUES ("Martha","Goodwin",21,61,8),("Aristotle","Dickson",22,64,15),("Arthur","Sykes",23,67,2),("Octavius","Bauer",24,70,4),("Lydia","Banks",25,73,13),("Mufutau","Douglas",26,76,29),("Xavier","Johnson",27,79,14),("Burke","Howell",28,82,20),("Eric","Workman",29,85,14),("Brian","Fischer",30,88,25);
-INSERT INTO `User` (`fname`,`lname`,`employee_id`,`role_id`,`hours_week`) VALUES ("Miranda","Valenzuela",31,91,20),("Malik","Lara",32,94,15),("Nissim","Farmer",33,97,32),("Stewart","Palmer",34,100,16),("Evelyn","Tucker",35,103,23),("Jarrod","Valenzuela",36,106,0),("Derek","Hudson",37,109,5),("Blaine","Lowe",38,112,10),("Miriam","Christian",39,115,29),("Kane","Porter",40,118,10);
-INSERT INTO `User` (`fname`,`lname`,`employee_id`,`role_id`,`hours_week`) VALUES ("Ainsley","Dodson",41,121,1),("Elijah","Mcclure",42,124,37),("Brock","Ellis",43,127,17),("Carissa","Moody",44,130,2),("Joel","Waters",45,133,29),("Kaden","Livingston",46,136,17),("Slade","Lane",47,139,17),("Kaden","Bell",48,142,22),("Leonard","Jacobson",49,145,6),("Maile","Compton",50,148,39);
+INSERT INTO `user` (`fname`, `lname`, `employee_id`, `role_id`, `hours_week`, `passwd`) VALUES
+('Chaney', 'Ross', 1, 1, 15, '2dd00bd77e0222ced882665481a9c1d9f907309d16e05ed007a1ea63928477a9'),
+('Indigo', 'Cooke', 2, 4, 36, 'e6f2ad814692e3f553d63a5535bfef46c030a680e6c3e79ee850dfcf5ae7798a'),
+('Micah', 'Garza', 3, 7, 25, '9f165139a8c2894a47aea23b77d330eca847264224a44d5a17b19db8b9a72c08'),
+('Michelle', 'Peters', 4, 10, 4, 'd353fb7a5f5b83cb82ebc17e22bdecd8f431ec38eef6435070586b89f4edf8c9'),
+('Kamal', 'Gilmore', 5, 13, 37, '520cdb563bf80b193aab6aad62781a9647c75dbf76748117299c7dac0ae63a87'),
+('Ursula', 'Boyle', 6, 16, 28, 'ab27b729d9cc4cb1c00960700446924159e9298d0f952aee3d55408b8e0b1b71'),
+('Thane', 'Webster', 7, 19, 20, '2f2fc7f2e9ce13b09b84f63d54d0b4a59f4dbd46aea41da67023817e2d0c5e59'),
+('Akeem', 'Kramer', 8, 22, 19, '978aebd56c3857a7ad73ff8ec48f30a5e84124ecdbc5bc4407876cd6eca9dd6d'),
+('Jackson', 'Mcconnell', 9, 25, 16, '3158ff7128caa8c4111c93b0456bb320baba297a5628bfcd2399e4d2c73a7312'),
+('April', 'Gonzales', 10, 28, 7, '4a69d282e9d8565a45871936d3dc0d5f72d4d64f1bf09e20dfbe67e151e0dfbc'),
+('Buffy', 'Middleton', 11, 31, 4, NULL),
+('Rana', 'Huber', 12, 34, 25, NULL),
+('Colleen', 'Hansen', 13, 37, 28, NULL),
+('Boris', 'Anthony', 14, 40, 23, NULL),
+('Dai', 'Witt', 15, 43, 4, NULL),
+('Iliana', 'Leach', 16, 46, 2, NULL),
+('Erasmus', 'Haynes', 17, 49, 30, NULL),
+('Madeline', 'Whitehead', 18, 52, 24, NULL),
+('Deanna', 'Guerra', 19, 55, 4, NULL),
+('Ivana', 'Knox', 20, 58, 40, NULL),
+('Martha', 'Goodwin', 21, 61, 8, NULL),
+('Aristotle', 'Dickson', 22, 64, 15, NULL),
+('Arthur', 'Sykes', 23, 67, 2, NULL),
+('Octavius', 'Bauer', 24, 70, 4, NULL),
+('Lydia', 'Banks', 25, 73, 13, NULL),
+('Mufutau', 'Douglas', 26, 76, 29, NULL),
+('Xavier', 'Johnson', 27, 79, 14, NULL),
+('Burke', 'Howell', 28, 82, 20, NULL),
+('Eric', 'Workman', 29, 85, 14, NULL),
+('Brian', 'Fischer', 30, 88, 25, NULL),
+('Miranda', 'Valenzuela', 31, 91, 20, NULL),
+('Malik', 'Lara', 32, 94, 15, NULL),
+('Nissim', 'Farmer', 33, 97, 32, NULL),
+('Stewart', 'Palmer', 34, 100, 16, NULL),
+('Evelyn', 'Tucker', 35, 103, 23, NULL),
+('Jarrod', 'Valenzuela', 36, 106, 0, NULL),
+('Derek', 'Hudson', 37, 109, 5, NULL),
+('Blaine', 'Lowe', 38, 112, 10, NULL),
+('Miriam', 'Christian', 39, 115, 29, NULL),
+('Kane', 'Porter', 40, 118, 10, NULL),
+('Ainsley', 'Dodson', 41, 121, 1, NULL),
+('Elijah', 'Mcclure', 42, 124, 37, NULL),
+('Brock', 'Ellis', 43, 127, 17, NULL),
+('Carissa', 'Moody', 44, 130, 2, NULL),
+('Joel', 'Waters', 45, 133, 29, NULL),
+('Kaden', 'Livingston', 46, 136, 17, NULL),
+('Slade', 'Lane', 47, 139, 17, NULL),
+('Kaden', 'Bell', 48, 142, 22, NULL),
+('Leonard', 'Jacobson', 49, 145, 6, NULL),
+('Maile', 'Compton', 50, 148, 39, NULL);
 
 
 INSERT INTO `TimeOff` (`employee_id`,`date`,`status`,`hours`) VALUES (1,"2018-07-19 21:47:06",2,6),(2,"2017-09-26 18:15:29",0,2),(3,"2018-12-10 13:08:39",1,8),(4,"2017-10-25 02:16:02",0,4),(5,"2018-08-02 06:47:45",2,5),(6,"2018-07-07 09:41:30",1,0),(7,"2018-05-21 14:20:49",0,3),(8,"2018-06-11 05:46:40",1,5),(9,"2018-09-14 00:13:05",0,7),(10,"2019-01-24 23:48:17",0,5);
