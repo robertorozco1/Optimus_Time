@@ -11,7 +11,7 @@ def connect():
 @app.route('/')
 def show_tables():
     c = connect()
-    query = "Select Availability.employee_id, Availability.* From Availability"
+    query = "Select Availability.* From Availability"
     out = c.execute(query)
 
     data = out.fetchall()
