@@ -52,5 +52,5 @@ if __name__ == "__main__":
     d = Shift(2, (0, 0), (9, 0))
     e = Shift(2, (6, 0), (23, 59))
 
-    aday = Day(0, a, b, c, d, e)
+    aday = Day(a, b, c, d, e)
     print(aday.employeelist())
