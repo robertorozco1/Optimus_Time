@@ -2,10 +2,17 @@ from flask import Flask, render_template
 import database
 app = Flask(__name__)
 
+db = None
+
+@app.before_first_request
+def initializedb():
+    global db
+    db = database.DebugDatabase()
+
 
 @app.route('/')
 def show_tables():
-    db = database.DebugDatabase()
+    global db
     db.query("Select Availability.* From Availability")
     data = db.fetchdata()
     
