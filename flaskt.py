@@ -19,7 +19,7 @@ class ReusableForm(Form):
     password = TextField('Password :', validators=[validators.required(), validators.Length(min=3, max=35)])
 
 @app.route('/register')
-def register():	
+def register():
     return render_template('welcome.html')
 
 @app.route("/", methods=['GET', 'POST'])
@@ -35,10 +35,16 @@ def login():
             # Save the comment here.
             conn.close()
             flash('Sucess!')
+            session_data = db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
+            session_data = db.fetchdata
+            session['uname'] = uname
+            session['fname'] = session_data[0]
+            session['lname'] = session_data[1]
+            session['role_id'] = session_data[2]
             return redirect(url_for("viewsch"))
         else:
             flash('Username and password does not match ')
- 
+
     return render_template('Welcome.html', form=form)
 
 @app.route('/viewsch')
@@ -47,8 +53,8 @@ def viewsch():
     db.query("SELECT lname, fname, 0, 1, 2, 3, 4, 5, 6 FROM user, availability WHERE user.employee_id=availability.employee_id")
     data = db.fetchdata()
     return render_template('scheduleoutput.html', the_data=data)
-    
-@app.route('/admin')	
+
+@app.route('/admin')
 def admin():
     return render_template('admin.html')
 
@@ -75,6 +81,14 @@ def time_off(employee_id):
         return "Approved"
     elif status == "FALSE":
         return "Denied"
-    
+@app.route ('/logout')
+def logout():
+    #pop all session variables and redirect to login
+    session.pop('uname', None)
+    session.pop('fname', None)
+    session.pop('lname', None)
+    session.pop('role_id', None)
+    return redirect(url_for('login'))
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5005, debug=True)
