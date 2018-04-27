@@ -37,6 +37,7 @@ def login():
             flash('Sucess!')
             session_data = db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
             session_data = db.fetchdata
+            session['logged_in'] = True
             session['uname'] = uname
             session['fname'] = session_data[0]
             session['lname'] = session_data[1]
@@ -84,6 +85,7 @@ def time_off(employee_id):
 @app.route ('/logout')
 def logout():
     #pop all session variables and redirect to login
+    session.pop('logged_in', None)
     session.pop('uname', None)
     session.pop('fname', None)
     session.pop('lname', None)
