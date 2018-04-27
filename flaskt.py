@@ -29,21 +29,20 @@ def login():
     if request.method == 'POST':
         pword=request.form['password']
         uname=request.form['uname']
-        data = db.query("SELECT employee_id, passwd FROM user WHERE employee_id = " + uname + " AND passwd='" + str(hashlib.sha256(pword.encode()).hexdigest())+"'")
-        data = db.fetchdata()
-        if data == 1:
+        db.query("SELECT employee_id, passwd FROM user WHERE employee_id = " + uname + " AND passwd='" + str(hashlib.sha256(pword.encode()).hexdigest())+"'")
+        data = db.fetchdata()[0]
+        if str(data[0]) == uname:
             # Save the comment here.
-            conn.close()
             flash('Sucess!')
-            session_data = db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
-            session_data = db.fetchdata
-            session['uname'] = uname
-            session['fname'] = session_data[0]
+            db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
+            session_data = db.fetchdata()[0]
+            session['logged_in'] = True
+            session['uname'] = session_data[0]
             session['lname'] = session_data[1]
-            session['role_id'] = session_data[2]
+            session['employee_id'] = session_data[2]
             return redirect(url_for("viewsch"))
         else:
-            flash('Username and password does not match ')
+            flash(data)
 
     return render_template('Welcome.html', form=form)
 
