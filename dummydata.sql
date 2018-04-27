@@ -27,14 +27,8 @@ CREATE TABLE `Availability` (
 );
 
 CREATE TABLE `Work_Schedule` (
-	`Week` INT NOT NULL,
-	`1` BINARY NOT NULL,
-	`2` BINARY NOT NULL,
-	`3` BINARY NOT NULL,
-	`4` BINARY NOT NULL,
-	`5` BINARY NOT NULL,
-	`6` BINARY NOT NULL,
-	`0` BINARY NOT NULL,
+	`id` INT NOT NULL,
+	`schedule` BINARY NOT NULL,
 	PRIMARY KEY (`Week`)
 );
 
@@ -42,7 +36,6 @@ CREATE TABLE `TimeOff` (
 	`employee_id`  INT NOT NULL,
 	`date` DATE NOT NULL,
 	`status` BOOLEAN,
-	`hours` INT NOT NULL,
 	PRIMARY KEY (`employee_id`)
 );
 
