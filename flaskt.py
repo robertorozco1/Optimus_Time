@@ -34,10 +34,18 @@ def login():
         if str(data[0]) == uname :
             # Save the comment here.
             flash('Sucess!')
+<<<<<<< HEAD
             db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
             session_data = db.fetchdata()[0]
             session['logged_in'] = True
             session['uname'] = session_data[0]
+=======
+            session_data = db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
+            session_data = db.fetchdata
+            session['logged_in'] = True
+            session['uname'] = uname
+            session['fname'] = session_data[0]
+>>>>>>> 03bc85dad3810ff9c910171915f741f54c9cef3a
             session['lname'] = session_data[1]
             session['employee_id'] = session_data[2]
             return redirect(url_for("viewsch"))
@@ -83,6 +91,7 @@ def time_off(employee_id):
 @app.route ('/logout')
 def logout():
     #pop all session variables and redirect to login
+    session.pop('logged_in', None)
     session.pop('uname', None)
     session.pop('fname', None)
     session.pop('lname', None)
