@@ -87,6 +87,9 @@ h2{
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
   </div>
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    {% endfor %}
 </form>
 </center>
 

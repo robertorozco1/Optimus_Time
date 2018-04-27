@@ -31,7 +31,7 @@ def login():
         uname=request.form['uname']
         db.query("SELECT employee_id, passwd FROM user WHERE employee_id = " + uname + " AND passwd='" + str(hashlib.sha256(pword.encode()).hexdigest())+"'")
         data = db.fetchdata()[0]
-        if str(data[0]) == uname:
+        if str(data[0]) == uname :
             # Save the comment here.
             flash('Sucess!')
             db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
