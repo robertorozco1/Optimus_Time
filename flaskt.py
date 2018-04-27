@@ -22,12 +22,12 @@ def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
-	
+
 def connect():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='dummydata')
     c = conn.cursor()
     return conn, c
-	
+
 
 def get_db():
     """Opens a new database connection if there is none yet for the
@@ -43,7 +43,7 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqllite_db.close()
 
-#initizle db       
+#initizle db
 def init_db():
     db = get_db()
     with app.open_resource('dummydata.sql', mode='r') as f:
@@ -57,14 +57,14 @@ def initdb_command():
     print('Initialized the database.')
 
 @app.route('/register')
-def register():	
+def register():
     return render_template('welcome.html')
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
     conn, c = connect()
     form = ReusableForm(request.form)
- 
+
     if request.method == 'POST':
         pword=request.form['password']
         uname=request.form['uname']
@@ -76,10 +76,16 @@ def login():
             # Save the comment here.
             conn.close()
             flash('Sucess!')
+            session_q = "SELECT fname, lname, role_id FROM user WHERE employee_id =" + uname"
+            session_data = c.fetchall(c.execute(session_q))
+            session['uname'] = uname
+            session['fname'] = session_data[0]
+            session['lname'] = session_data[1]
+            session['role_id'] = session_data[2]
             return redirect(url_for("viewsch"))
         else:
             flash('Username and password does not match ')
- 
+
     return render_template('Welcome.html', form=form)
 
 @app.route('/viewsch')
@@ -92,8 +98,8 @@ def viewsch():
 	data=c.fetchall()
 	conn.close()
 	return render_template('scheduleoutput.html', the_data=data)
-    
-@app.route('/admin')	
+
+@app.route('/admin')
 def admin():
 	return render_template('admin.html')
 
@@ -120,6 +126,15 @@ def time_off(employee_id):
         return "Approved"
     elif status == "FALSE":
         return "Denied"
-    
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5005, debug=True)
+
+@app.route('/logout')
+def logout():
+    #remove all session info and redirect to login
+    session.pop('uname', None)
+    session.pop('fname', None)
+    session.pop('lname', None)
+    session.pop('role_id', None)
+    return redirect(url_for(login))
