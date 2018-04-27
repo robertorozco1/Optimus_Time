@@ -4,6 +4,7 @@ import sqlite3
 import pymysql
 import sys
 import hashlib
+import database
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -17,38 +18,11 @@ class ReusableForm(Form):
     email = TextField('Employee :', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password :', validators=[validators.required(), validators.Length(min=3, max=35)])
 
-def connect_db():
-    """Connects to the specific database."""
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.row_factory = sqlite3.Row
-    return rv
-	
-def connect():
-    conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='dummydata')
-    c = conn.cursor()
-    return conn, c
-	
-
-def get_db():
-    """Opens a new database connection if there is none yet for the
-    current application context.
-    """
-    if not hasattr(g, 'sqlite_db'):
-        g.sqllite_db_db = connect_db()
-    return g.sqllite_db
-
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'sqlite_db'):
         g.sqllite_db.close()
-
-#initizle db       
-def init_db():
-    db = get_db()
-    with app.open_resource('dummydata.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
 
 @app.cli.command('initdb')
 def initdb_command():
@@ -62,17 +36,14 @@ def register():
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
-    conn, c = connect()
     form = ReusableForm(request.form)
- 
+    db = database.DebugDatabase()
     if request.method == 'POST':
         pword=request.form['password']
         uname=request.form['uname']
-
-        query = "SELECT employee_id, passwd FROM user WHERE employee_id =" + uname + " && passwd='" + str(hashlib.sha256(pword.encode()).hexdigest())+"'"
-
-        data = c.execute(query)
-        if data == 1:
+        data = db.query("SELECT employee_id, passwd FROM user WHERE employee_id = " + uname + " AND passwd='" + str(hashlib.sha256(pword.encode()).hexdigest())+"'")
+        data = db.fetchdata()
+        if data == :
             # Save the comment here.
             conn.close()
             flash('Sucess!')
@@ -84,18 +55,14 @@ def login():
 
 @app.route('/viewsch')
 def viewsch():
-	conn, c = connect()
-	query = "SELECT concat(lname, ', ', fname)AS name, sunday, monday, tuesday, wednesday, thursday, friday, saturday FROM user, individual_availability WHERE user.employee_id=individual_availability.employee_id"
-
-	c.execute(query)
-
-	data=c.fetchall()
-	conn.close()
-	return render_template('scheduleoutput.html', the_data=data)
+    db = database.DebugDatabase()
+    db.query("SELECT lname, fname, 0, 1, 2, 3, 4, 5, 6 FROM user, availability WHERE user.employee_id=availability.employee_id")
+    data = db.fetchdata()
+    return render_template('scheduleoutput.html', the_data=data)
     
 @app.route('/admin')	
 def admin():
-	return render_template('admin.html')
+    return render_template('admin.html')
 
 @app.route('/rto')
 def timeoff():
@@ -103,7 +70,7 @@ def timeoff():
 
 @app.route('/makesch')
 def makeasch():
-	return render_template('makeasch.html')
+    return render_template('makeasch.html')
 
 @app.route('/hoursworked')
 def hoursworked():
