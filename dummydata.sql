@@ -41,21 +41,21 @@ CREATE TABLE `TimeOff` (
 
 
 INSERT INTO `user` (`fname`, `lname`, `employee_id`, `role_id`, `hours_week`, `passwd`) VALUES
-('Chaney', 'Ross', 1, 1, 15, '2dd00bd77e0222ced882665481a9c1d9f907309d16e05ed007a1ea63928477a9'),
-('Indigo', 'Cooke', 2, 4, 36, 'e6f2ad814692e3f553d63a5535bfef46c030a680e6c3e79ee850dfcf5ae7798a'),
-('Micah', 'Garza', 3, 7, 25, '9f165139a8c2894a47aea23b77d330eca847264224a44d5a17b19db8b9a72c08'),
+('Chaney', 'Ross', 1, 10, 15, '2dd00bd77e0222ced882665481a9c1d9f907309d16e05ed007a1ea63928477a9'),
+('Indigo', 'Cooke', 2, 10, 36, 'e6f2ad814692e3f553d63a5535bfef46c030a680e6c3e79ee850dfcf5ae7798a'),
+('Micah', 'Garza', 3, 10, 25, '9f165139a8c2894a47aea23b77d330eca847264224a44d5a17b19db8b9a72c08'),
 ('Michelle', 'Peters', 4, 10, 4, 'd353fb7a5f5b83cb82ebc17e22bdecd8f431ec38eef6435070586b89f4edf8c9'),
-('Kamal', 'Gilmore', 5, 13, 37, '520cdb563bf80b193aab6aad62781a9647c75dbf76748117299c7dac0ae63a87'),
-('Ursula', 'Boyle', 6, 16, 28, 'ab27b729d9cc4cb1c00960700446924159e9298d0f952aee3d55408b8e0b1b71'),
-('Thane', 'Webster', 7, 19, 20, '2f2fc7f2e9ce13b09b84f63d54d0b4a59f4dbd46aea41da67023817e2d0c5e59'),
-('Akeem', 'Kramer', 8, 22, 19, '978aebd56c3857a7ad73ff8ec48f30a5e84124ecdbc5bc4407876cd6eca9dd6d'),
-('Jackson', 'Mcconnell', 9, 25, 16, '3158ff7128caa8c4111c93b0456bb320baba297a5628bfcd2399e4d2c73a7312'),
-('April', 'Gonzales', 10, 28, 7, '4a69d282e9d8565a45871936d3dc0d5f72d4d64f1bf09e20dfbe67e151e0dfbc'),
-('Buffy', 'Middleton', 11, 31, 4, NULL),
-('Rana', 'Huber', 12, 34, 25, NULL),
-('Colleen', 'Hansen', 13, 37, 28, NULL),
-('Boris', 'Anthony', 14, 40, 23, NULL),
-('Dai', 'Witt', 15, 43, 4, NULL),
+('Kamal', 'Gilmore', 5, 10, 37, '520cdb563bf80b193aab6aad62781a9647c75dbf76748117299c7dac0ae63a87'),
+('Ursula', 'Boyle', 6, 10, 28, 'ab27b729d9cc4cb1c00960700446924159e9298d0f952aee3d55408b8e0b1b71'),
+('Thane', 'Webster', 7, 30, 20, '2f2fc7f2e9ce13b09b84f63d54d0b4a59f4dbd46aea41da67023817e2d0c5e59'),
+('Akeem', 'Kramer', 8, 20, 19, '978aebd56c3857a7ad73ff8ec48f30a5e84124ecdbc5bc4407876cd6eca9dd6d'),
+('Jackson', 'Mcconnell',9, 10, 16, '3158ff7128caa8c4111c93b0456bb320baba297a5628bfcd2399e4d2c73a7312'),
+('April', 'Gonzales', 10, 20, 7, '4a69d282e9d8565a45871936d3dc0d5f72d4d64f1bf09e20dfbe67e151e0dfbc'),
+('Buffy', 'Middleton', 11, 10, 4, NULL),
+('Rana', 'Huber', 12, 30, 25, NULL),
+('Colleen', 'Hansen', 13, 30, 28, NULL),
+('Boris', 'Anthony', 14, 20, 23, NULL),
+('Dai', 'Witt', 15, 10, 4, NULL),
 ('Iliana', 'Leach', 16, 46, 2, NULL),
 ('Erasmus', 'Haynes', 17, 49, 30, NULL),
 ('Madeline', 'Whitehead', 18, 52, 24, NULL),
@@ -92,6 +92,7 @@ INSERT INTO `user` (`fname`, `lname`, `employee_id`, `role_id`, `hours_week`, `p
 ('Leonard', 'Jacobson', 49, 145, 6, NULL),
 ('Maile', 'Compton', 50, 148, 39, NULL);
 
+INSERT INTO 'Role' ('role_id','rolename') VALUES (10,'employee'), (20,'manager'),(30,'supervisor');
 
 INSERT INTO `TimeOff` (`employee_id`,`date`,`status`) VALUES (1,"2018-07-19 21:47:06",2),(2,"2017-09-26 18:15:29",0),(3,"2018-12-10 13:08:39",1),(4,"2017-10-25 02:16:02",0),(5,"2018-08-02 06:47:45",2),(6,"2018-07-07 09:41:30",1),(7,"2018-05-21 14:20:49",0),(8,"2018-06-11 05:46:40",1),(9,"2018-09-14 00:13:05",0),(10,"2019-01-24 23:48:17",0);
 INSERT INTO `TimeOff` (`employee_id`,`date`,`status`) VALUES (11,"2017-10-01 14:05:14",2),(12,"2017-05-20 01:41:17",0),(13,"2017-05-19 10:20:39",1),(14,"2017-07-08 21:29:20",2),(15,"2018-02-28 06:25:40",0),(16,"2019-02-15 15:41:13",2),(17,"2017-12-18 07:57:45",2),(18,"2018-11-18 00:09:46",2),(19,"2019-02-18 21:58:14",2),(20,"2018-10-14 19:14:40",0);
