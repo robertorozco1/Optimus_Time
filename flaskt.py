@@ -13,6 +13,7 @@ app = Flask(__name__) # create the application instance :)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 
+
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 class ReusableForm(Form):
     email = TextField('Employee :', validators=[validators.required(), validators.Length(min=6, max=35)])
@@ -24,6 +25,7 @@ def register():
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
+    session['logged_in'] = False
     form = ReusableForm(request.form)
     db = database.DebugDatabase()
     if request.method == 'POST':
@@ -38,13 +40,15 @@ def login():
             if str(hashlib.sha256(pword.encode()).hexdigest()) == data[1]:
                 # Save the comment here.
                 flash('Sucess!')
+                #Query for relevant employee info (first name, last name, role id) for verification
                 db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
                 session_data = db.fetchdata()[0]
+                #assign user info to session variables
                 session['logged_in'] = True
                 session['uname'] = uname
                 session['fname'] = session_data[0]
                 session['lname'] = session_data[1]
-                session['employee_id'] = session_data[2]
+                session['role_id'] = session_data[2]
                 return redirect(url_for("viewsch"))
             else:
                 flash("Invalid password")
@@ -53,26 +57,50 @@ def login():
 
 @app.route('/viewsch')
 def viewsch():
-    db = database.DebugDatabase()
-    db.query("SELECT lname, fname, 0, 1, 2, 3, 4, 5, 6 FROM user, availability WHERE user.employee_id=availability.employee_id")
-    data = db.fetchdata()
-    return render_template('scheduleoutput.html', the_data=data)
+    if not session.get('logged_in'):
+        flash('Please Log in')
+        return redirect(url_for('login'))
+    else:
+        db = database.DebugDatabase()
+        db.query("SELECT lname, fname, 0, 1, 2, 3, 4, 5, 6 FROM user, availability WHERE user.employee_id=availability.employee_id")
+        data = db.fetchdata()
+        return render_template('scheduleoutput.html', the_data=data)
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html')
+    role = session.get('role_id')
+    if not session.get('logged_in'):
+        flash('Please Log in')
+        return redirect(url_for('login'))
+    elif role != 30 or role != 20:
+        flash ('Unauthorized Access: Please Contact an Administrator')
+        return redirect(url_for('login'))
+    else:
+        return render_template('admin.html')
 
 @app.route('/rto')
 def timeoff():
-    return render_template('timeoff.html')
+    if not session.get('logged_in'):
+        flash('Please Log in')
+        return redirect(url_for('login'))
+    else:
+        return render_template('timeoff.html')
 
 @app.route('/makesch')
 def makeasch():
-    return render_template('makeasch.html')
+    if not session.get('logged_in'):
+        flash('Please Log in')
+        return redirect(url_for('login'))
+    else:
+        return render_template('makeasch.html')
 
 @app.route('/hoursworked')
 def hoursworked():
-    return render_template('hoursworked.html')
+    if not session.get('logged_in'):
+        flash('Please Log in')
+        return redirect(url_for('login'))
+    else:
+        return render_template('hoursworked.html')
 
 def time_off(employee_id):
     conn, c = connect()
