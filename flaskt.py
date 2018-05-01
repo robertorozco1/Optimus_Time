@@ -39,7 +39,6 @@ def login():
             data = data[0]
             if str(hashlib.sha256(pword.encode()).hexdigest()) == data[1]:
                 # Save the comment here.
-                flash('Sucess!')
                 #Query for relevant employee info (first name, last name, role id) for verification
                 db.query("SELECT fname, lname, role_id FROM user WHERE employee_id = " + uname )
                 session_data = db.fetchdata()[0]
@@ -72,9 +71,9 @@ def admin():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
-    elif role != 30 or role != 20:
-        flash ('Unauthorized Access: Please Contact an Administrator')
-        return redirect(url_for('login'))
+#    elif role != 30 or role != 20:
+#        flash ('Unauthorized Access: Please Contact an Administrator')
+#        return redirect(url_for('login'))
     else:
         return render_template('admin.html')
 
@@ -121,6 +120,7 @@ def logout():
     session.pop('fname', None)
     session.pop('lname', None)
     session.pop('role_id', None)
+    flash('Sucessfuly Logged Out!')
     return redirect(url_for('login'))
 
 if __name__ == "__main__":

@@ -41,7 +41,7 @@ CREATE TABLE `TimeOff` (
 
 
 INSERT INTO `user` (`fname`, `lname`, `employee_id`, `role_id`, `hours_week`, `passwd`) VALUES
-('Chaney', 'Ross', 1, 10, 15, '2dd00bd77e0222ced882665481a9c1d9f907309d16e05ed007a1ea63928477a9'),
+('Chaney', 'Ross', 1, 30, 15, '2dd00bd77e0222ced882665481a9c1d9f907309d16e05ed007a1ea63928477a9'),
 ('Indigo', 'Cooke', 2, 10, 36, 'e6f2ad814692e3f553d63a5535bfef46c030a680e6c3e79ee850dfcf5ae7798a'),
 ('Micah', 'Garza', 3, 10, 25, '9f165139a8c2894a47aea23b77d330eca847264224a44d5a17b19db8b9a72c08'),
 ('Michelle', 'Peters', 4, 10, 4, 'd353fb7a5f5b83cb82ebc17e22bdecd8f431ec38eef6435070586b89f4edf8c9'),

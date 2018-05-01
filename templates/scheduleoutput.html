@@ -1,174 +1,35 @@
-<!DOCTYPE html>
-<html>
-<title>Your Schedule</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-</style>
-<body class="w3-light-grey">
-
-<!-- Top container -->
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <span class="w3-bar-item w3-l">Optimus Time</span>
-</div>
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container w3-row">
-    <div class="w3-col s4">
-    </div>
-    <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong>Mike</strong></span><br>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
-    </div>
-  </div>
-  <hr>
-  <div class="w3-container">
-    <h5>Dashboard</h5>
-  </div>
-  <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="/viewsch" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i> View Schedule</a>
-    <a href="/hoursworked" class="w3-bar-item w3-button w3-padding"><i class="fa fa-area-chart"></i>  Hours Worked</a>
-    <a href="/makesch" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-o"></i>  Make Schedule</a>
-	<a href="/rto" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-o"></i>  Request Time off</a>
-	<a href="/admin" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-email-o"></i>  Admin View</a>
-
-  <br><br>
-  </div>
-</nav>
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
-<style>
-* {box-sizing: border-box;}
-ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
-
-.month {
-    padding: 40px 10px;
-    width: 100%;
-    background: #6DB9F6;
-    text-align: center;
-}
-
-.month ul {
-    margin: 0;
-    padding: 0;
-}
-
-.month ul li {
-    color: white;
-    font-size: 20px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-.month .prev {
-    float: left;
-    padding-top: 10px;
-}
-
-.month .next {
-    float: right;
-    padding-top: 10px;
-}
-
-.weekdays {
-    margin: 0;
-    padding: 10px 0;
-    background-color: #ddd;
-}
-
-.weekdays li {
-    display: inline-block;
-    width: 13.6%;
-    color: #666;
-    text-align: center;
-}
-
-.days {
-    padding: 10px 0;
-    background: #eee;
-    margin: 0;
-}
-
-.days li {
-    list-style-type: none;
-    display: inline-block;
-    width: 13.6%;
-    text-align: center;
-    margin-bottom: 5px;
-    font-size:12px;
-    color: #777;
-}
-
-.days li .active {
-    padding: 5px;
-    background: #6DB9F6;
-    color: white !important
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-
-</style>
-</head>
+{% extends "navbar.html" %}
+{% block body %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <body>
 
-<center><h1>Week Schedule</h1></center>
+    <center><h1>Week Schedule</h1></center>
 
-    {% block body %}
     <h2>{{ the_title }}</h2>
     <table id="logTable">
-		<tr>
-			<th>Name</th>
-			<th>Sunday</th>
-			<th>Monday</th>
-			<th>Tuesday</th>
-			<th>Wednesday</th>
-			<th>Thursday</th>
-			<th>Friday</th>
-			<th>Saturday</th>
-		</tr>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
         <tr>
             {% for row in the_row_titles %}
-                <th>{{row_title}}</th>
+            <th>{{row_title}}</th>
             {% endfor %}
         </tr>
         {% for log_row in the_data %}
-            <tr>
-                {% for item in log_row %}
-                    <th>{{item}}</th>
-                {% endfor %}
-            </tr>
+        <tr>
+            {% for item in log_row %}
+            <th>{{item}}</th>
+            {% endfor %}
+        </tr>
         {% endfor %}
-</table>
-    {% endblock %}
-
-
+    </table>
 </body>
-</html>
+{% endblock %}
