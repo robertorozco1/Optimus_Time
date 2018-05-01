@@ -2,6 +2,7 @@ import abc
 import sqlite3
 import pymysql
 import Scheduling
+import pickle
 
 
 class Database(abc.ABC):
@@ -12,7 +13,7 @@ class Database(abc.ABC):
         self.command = None
 
     @abc.abstractmethod
-    def query(self, query):
+    def query(self, query, params):
         ...
 
     @abc.abstractmethod
@@ -31,26 +32,26 @@ class Database(abc.ABC):
         query = "FROM Work_Schedule SELECT schedule WHERE weekid=?"
         params = (weekid)
         self.query(query, params)
-        return self.fetchdata()
+        blob = self.fetchdata()
+        schedule = pickle.loads(blob)
+        return schedule
 
     def insertschedule(self, schedule: Scheduling.Schedule):
+        blob = pickle.dumps(schedule)
         query = "INSERT INTO Work_Schedule VALUES '(?,?)'"
-        params = (schedule.weekid, schedule)
+        params = (schedule.weekid, blob)
         self.query(query, params)
         self.commit()
 
     def updateschedule(self, schedule):
+        blob = pickle.dumps(schedule)
         query = "UPDATE Work_Schedule SET schedule='?' WHERE weekid='?'"
-        params = (schedule, schedule.weekid)
+        params = (blob, schedule.weekid)
         self.query(query, params)
         self.commit()
 
     def getavailability(self, employeeid, day):
-        if day is not int:
-            raise TypeError("day must be type int")
-        if day not in range(0, 7):
-            raise ValueError("day must be in range of 1 to 6")
-        query = "FROM Availability SELECT ? WHERE employee_id=?"
+        query = "SELECT `1` FROM Availability WHERE employee_id=?"
         params = (day, employeeid)
         self.query(query, params)
         return self.fetchdata()
@@ -86,8 +87,8 @@ class DebugDatabase(Database):
         schema = open(script).read()
         self.database.executescript(schema)
 
-    def query(self, query):
-        self.command = self.database.execute(query)
+    def query(self, query, params=()):
+        self.command = self.database.execute(query, params)
 
     def commit(self):
         self.database.commit()
@@ -106,8 +107,8 @@ class RemoteDatabase(Database):
         self.command = None
         self.cursor = self.database.cursor()
 
-    def query(self, query):
-        self.command = self.cursor.execute(query)
+    def query(self, query, params):
+        self.command = self.cursor.execute(query, params)
 
     def commit(self):
         self.database.commit()
@@ -117,3 +118,15 @@ class RemoteDatabase(Database):
 
     def close(self):
         self.database.close()
+
+
+class DatabaseInterface:
+
+    def __init__(self, debug=True):
+       self.db = DebugDatabase() if debug else RemoteDatabase()
+
+
+if __name__ == "__main__":
+    interface = DatabaseInterface()
+    interface.db.getavailability("`0`", 0)
+    print(interface.db.fetchdata())
