@@ -4,7 +4,7 @@
 <body>
 
     <h1>Please enter all days you are free for the week and hours.</h1>
-    <form action="{{ url_for('makeasch') }}" method=post class=add-entry>
+    <form action="{{url_for('submitsch')}}" method=post>
       <table id="logTable">
           <tr>
               <th>Sunday</th>
@@ -17,405 +17,50 @@
           </tr>
           <tr>
             <th>
-              <select name="starttime_sunday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_sunday" type="time">
+              <p> End Time </p>
+              <input name="endtime_sunday" type="time">
             </th>
             <th>
-              <select name="starttime_monday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_monday" type="time">
+              <p> End Time </p>
+              <input name="endtime_monday" type="time">
             </th>
             <th>
-              <select name="starttime_tuesday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_tuesday" type="time">
+              <p> End Time </p>
+              <input name="endtime_tuesday" type="time">
             </th>
             <th>
-              <select name="starttime_wednesday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_wednesday" type="time">
+              <p> End Time </p>
+              <input name="endtime_wednesday" type="time">
             </th>
             <th>
-              <select name="starttime_thursday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_thursday" type="time">
+              <p> End Time </p>
+              <input name="endtime_thursday" type="time">
             </th>
             <th>
-              <select name="starttime_friday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_friday" type="time">
+              <p> End Time </p>
+              <input name="endtime_friday" type="time">
             </th>
             <th>
-              <select name="starttime_saturday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
+              <p> Start Time </p>
+              <input name="starttime_saturday" type="time">
+              <p> End Time </p>
+              <input name="endtime_saturday" type="time">
             </th>
           </tr>
-          <tr>
-            <th>
-              <select name="endtime_sunday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_monday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_tuesday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_wednesday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_thursday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_friday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-            <th>
-              <select name="endtime_saturday">
-                <option value="0">12AM</option>
-                <option value="100">1AM</option>
-                <option value="200">2AM</option>
-                <option value="300">3AM</option>
-                <option value="400">4AM</option>
-                <option value="500">5AM</option>
-                <option value="600">6AM</option>
-                <option value="700">7AM</option>
-                <option value="800">8AM</option>
-                <option value="900">9AM</option>
-                <option value="1000">10AM</option>
-                <option value="1100">11AM</option>
-                <option value="1200">12PM</option>
-                <option value="1300">1PM</option>
-                <option value="1400">2PM</option>
-                <option value="1500">3PM</option>
-                <option value="1600">4PM</option>
-                <option value="1700">5PM</option>
-                <option value="1800">6PM</option>
-                <option value="1900">7PM</option>
-                <option value="2000">8PM</option>
-                <option value="2100">9PM</option>
-                <option value="2200">10PM</option>
-                <option value="2300">11PM</option>
-              </select>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <input id="time" type="time">
-            </th>
-          </tr>
+          <input type=submit value=Submit>
+
     </form>
 </body>
 {% endblock %}

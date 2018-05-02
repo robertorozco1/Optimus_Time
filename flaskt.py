@@ -5,6 +5,8 @@ import pymysql
 import sys
 import hashlib
 import database
+import generateschedule
+import Scheduling
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -31,7 +33,7 @@ def register():
 def login():
     session['logged_in'] = False
     form = ReusableForm(request.form)
-    db = database.DebugDatabase()
+    db = get_db()
     if request.method == 'POST':
         pword=request.form['password']
         uname=request.form['uname']
@@ -52,23 +54,22 @@ def login():
                 session['fname'] = session_data[0]
                 session['lname'] = session_data[1]
                 session['role_id'] = session_data[2]
-                return redirect(url_for("viewsch"))
+                return redirect(url_for("makeasch"))
             else:
                 flash("Invalid password")
 
     return render_template('Welcome.html', form=form)
 
-@app.route('/viewsch')
-def viewsch():
+@app.route('/viewavail')
+def viewavail():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
-        db = database.DebugDatabase()
-        db.query("SELECT lname, fname, `0`, `1`, `2`, `3`, `4`, `5`, `6` FROM user, availability WHERE user.employee_id=availability.employee_id")
+        db = get_db()
         data = db.fetchdata()
         print(data)
-        return render_template('scheduleoutput.html', the_data=data)
+        return render_template('availabilityview.html', the_data=data)
 
 @app.route('/admin')
 def admin():
@@ -76,9 +77,9 @@ def admin():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
-#    elif role != 30 or role != 20:
-#        flash ('Unauthorized Access: Please Contact an Administrator')
-#        return redirect(url_for('login'))
+    elif role != 30 or role != 20:
+        flash ('Unauthorized Access: Please Contact an Administrator')
+        return redirect(url_for('login'))
     else:
         return render_template('admin.html')
 
@@ -90,13 +91,19 @@ def timeoff():
     else:
         return render_template('timeoff.html')
 
-@app.route('/makesch')
+@app.route('/makeasch')
 def makeasch():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
         return render_template('makeasch.html')
+
+@app.route('/makeasch/submit/', methods=['GET','POST'])
+def submitsch():
+    if request.method == 'POST':
+        emp_avail = request.form['starttime_sunday']
+        return redirect(url_for('makeasch'))
 
 @app.route('/hoursworked')
 def hoursworked():
