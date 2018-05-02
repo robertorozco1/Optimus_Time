@@ -16,13 +16,13 @@ CREATE TABLE `Role` (
 
 CREATE TABLE `Availability` (
 	`employee_id`  INT NOT NULL,
-	`1` varchar(255) NOT NULL,
-	`2` varchar(255) NOT NULL,
-	`3` varchar(255) NOT NULL,
-	`4` varchar(255) NOT NULL,
-	`5` varchar(255) NOT NULL,
-	`6` varchar(255) NOT NULL,
-	`0` varchar(255) NOT NULL,
+	`1` varchar(255),
+	`2` varchar(255),
+	`3` varchar(255),
+	`4` varchar(255),
+	`5` varchar(255),
+	`6` varchar(255),
+	`0` varchar(255),
 	PRIMARY KEY (`employee_id`)
 );
 

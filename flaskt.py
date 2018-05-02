@@ -67,6 +67,7 @@ def viewavail():
         return redirect(url_for('login'))
     else:
         db = get_db()
+        db.query("SELECT lname, fname, `0`, `1`, `2`, `3`, `4`, `5`, `6` FROM user, availability WHERE user.employee_id=availability.employee_id")
         data = db.fetchdata()
         print(data)
         return render_template('availabilityview.html', the_data=data)
