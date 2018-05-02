@@ -19,6 +19,10 @@ class ReusableForm(Form):
     email = TextField('Employee :', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password :', validators=[validators.required(), validators.Length(min=3, max=35)])
 
+def get_db():
+    g.sqlite_db = database.DebugDatabase()
+    return g.sqlite_db
+
 @app.route('/register')
 def register():
     return render_template('welcome.html')
@@ -61,8 +65,9 @@ def viewsch():
         return redirect(url_for('login'))
     else:
         db = database.DebugDatabase()
-        db.query("SELECT lname, fname, 0, 1, 2, 3, 4, 5, 6 FROM user, availability WHERE user.employee_id=availability.employee_id")
+        db.query("SELECT lname, fname, `0`, `1`, `2`, `3`, `4`, `5`, `6` FROM user, availability WHERE user.employee_id=availability.employee_id")
         data = db.fetchdata()
+        print(data)
         return render_template('scheduleoutput.html', the_data=data)
 
 @app.route('/admin')
