@@ -19,10 +19,11 @@ class Schedule:
         return Schedule(self.weekid, self.week.employeeweek(employeeid))
 
     def employeelist(self):
-        employeelist = []
+        employeelist = set()
         for day in self.week.values():
-            employeelist.append(day.employeelist())
-        return employeelist
+            for employee in day.employeelist():
+                employeelist.add(employee)
+        return list(employeelist)
 
     def totaltime(self):
         time = HourMinute()
