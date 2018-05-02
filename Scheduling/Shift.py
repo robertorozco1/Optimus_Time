@@ -21,9 +21,12 @@ class Shift:
     @staticmethod
     def __validateshift__(shift):
         if shift is not HourMinute:
-            if len(shift) != 2:
-                raise TypeError("End must be of type HourMinute or length of 2")
-            shift = HourMinute(shift[0], shift[1])
+            if type(shift) is int:
+                shift = HourMinute(minute=shift)
+            elif len(shift) == 2:
+                shift = HourMinute(shift[0], shift[1])
+            else:
+                raise TypeError("Times must be of type HourMinute, int, or iterable length 2")
         if shift.hour > 24:
             raise ValueError("A day cannot have more than 24 hours")
         return shift

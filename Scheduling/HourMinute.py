@@ -3,7 +3,7 @@ MINUTESINHOUR = 60
 
 class HourMinute:
 
-    def __init__(self, hour=0, minute=0):
+    def __init__(self, hour=None, minute=0):
         self.__hour = None
         self.__minute = None
 

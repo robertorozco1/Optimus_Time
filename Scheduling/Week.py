@@ -102,6 +102,9 @@ class Week(dict):
     def saturday(self, value):
         self.__setitem__(6, value)
 
+    def days(self):
+        return self.items()
+
 
 if __name__ == "__main__":
     a = Week()
