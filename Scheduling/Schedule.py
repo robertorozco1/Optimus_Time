@@ -1,4 +1,5 @@
 from Scheduling.Week import Week
+from Scheduling.HourMinute import HourMinute
 
 
 class Schedule:
@@ -14,17 +15,20 @@ class Schedule:
     def __repr__(self):
         return str((self.weekid, self.week))
 
-    def employeeweek(self, employeeid):
-        employeeweek = Week()
-        for item in self.week.items():
-            employeeweek.update({item[0]: item[1].employeeday(employeeid)})
-        return employeeweek
+    def employeeschedule(self, employeeid):
+        return Schedule(self.weekid, self.week.employeeweek(employeeid))
 
     def employeelist(self):
         employeelist = []
         for day in self.week.values():
             employeelist.append(day.employeelist())
         return employeelist
+
+    def totaltime(self):
+        time = HourMinute()
+        for day in self.week.values():
+            time += day.totaltime()
+        return time
 
     def _set_weekid(self, weekid: int):
         if type(weekid) is not int:

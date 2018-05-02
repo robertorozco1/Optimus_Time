@@ -24,7 +24,7 @@ class Day:
         for shift in self.shifts:
             if shift.employeeid == employeeid:
                 employeeshifts.append(shift)
-        return Day(self.weekday, *employeeshifts)
+        return Day(*employeeshifts)
 
     def totaltime(self):
         totaltime = HourMinute()

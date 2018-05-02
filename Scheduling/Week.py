@@ -105,6 +105,12 @@ class Week(dict):
     def days(self):
         return self.items()
 
+    def employeeweek(self, employeeid):
+        employeeweek = Week()
+        for item in self.items():
+            employeeweek.update({item[0]: item[1].employeeday(employeeid)})
+        return employeeweek
+
 
 if __name__ == "__main__":
     a = Week()

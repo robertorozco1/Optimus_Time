@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 import database
 import generateschedule
-import sys
 app = Flask(__name__)
 
 db = None
@@ -16,10 +15,9 @@ def initializedb():
 def show_tables():
     global db
     schedule = generateschedule.generateschedule(db)
-    data = schedule.week.tuesday.employeelist()
-    print(data, file=sys.stdout)
+    data = schedule.employeeschedule(2).totaltime()
     
-    return render_template('index.html', the_data=[data])
+    return render_template('index.html', the_data=[[data]])
 
 
 if __name__ == "__main__":
