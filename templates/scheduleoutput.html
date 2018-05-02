@@ -18,14 +18,9 @@
             <th>Friday</th>
             <th>Saturday</th>
         </tr>
+        {% for user_col in the_data %}
         <tr>
-            {% for row in the_row_titles %}
-            <th>{{row_title}}</th>
-            {% endfor %}
-        </tr>
-        {% for log_row in the_data %}
-        <tr>
-            {% for item in log_row %}
+            {% for item in user_col %}
             <th>{{item}}</th>
             {% endfor %}
         </tr>
