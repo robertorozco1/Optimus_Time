@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-    
+
 </style>
 
 <!-- Top container -->
@@ -33,9 +33,9 @@
     </div>
     <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a href="/viewsch" class="w3-bar-item w3-button w3-padding {% if request.path == '/viewsch' %}w3-blue{% endif %}"><i class="fa fa-users fa-fw"></i> View Schedule</a>
+        <a href="/viewsch" class="w3-bar-item w3-button w3-padding {% if request.path == '/viewavail' %}w3-blue{% endif %}"><i class="fa fa-users fa-fw"></i> View Employee Availability</a>
         <a href="/hoursworked" class="w3-bar-item w3-button w3-padding {% if request.path == '/hoursworked' %}w3-blue{% endif %}"><i class="fa fa-area-chart"></i>  Hours Worked</a>
-        <a href="/makesch" class="w3-bar-item w3-button w3-padding {% if request.path == '/makesch' %}w3-blue{% endif %}"><i class="fa fa-calendar-o"></i>  Make Schedule</a>
+        <a href="/makesch" class="w3-bar-item w3-button w3-padding {% if request.path == '/makeasch' %}w3-blue{% endif %}"><i class="fa fa-calendar-o"></i>  Make Schedule</a>
         <a href="/rto" class="w3-bar-item w3-button w3-padding {% if request.path == '/rto' %}w3-blue{% endif %}"><i class="fa fa-calendar-o"></i>  Request Time off</a>
         <a href="/admin" {% if session.role_id == 20 or 30 %} style="display: none" {% endif %} class="w3-bar-item w3-button w3-padding {% if request.path == '/admin' %}w3-blue{% endif %}"><i class="fa fa-calendar-o"></i>  Admin View</a>
         <br><br>
