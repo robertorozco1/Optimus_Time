@@ -20,6 +20,16 @@ class Week(dict):
     def __delitem__(self):
         raise AttributeError("Week has no attribute __delitem__")
 
+    def __getstate__(self):
+        state = super(Week, self).copy()
+        return state
+
+    def __setstate__(self, state):
+        super(Week, self).update(state)
+
+    def __reduce__(self):
+        return (Week, (), self.__getstate__())
+
     @staticmethod
     def pop():
         raise AttributeError("Week has no attribute pop")
