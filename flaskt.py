@@ -61,6 +61,7 @@ def login():
     return render_template('Welcome.html', form=form)
 
 @app.route('/viewavail')
+#View all current employee availability based on Availability table
 def viewavail():
     if not session.get('logged_in'):
         flash('Please Log in')
@@ -92,6 +93,14 @@ def timeoff():
     else:
         return render_template('timeoff.html')
 
+@app.route('/newworkschedule')
+def show_tables():
+    db = get_db()
+    schedule = generateschedule.generateschedule(db)
+    data = schedule.employeeschedule()
+
+    return render_template('availabilityview.html', the_data=[[data]])
+
 @app.route('/makeasch')
 def makeasch():
     if not session.get('logged_in'):
@@ -102,8 +111,37 @@ def makeasch():
 
 @app.route('/makeasch/submit/', methods=['GET','POST'])
 def submitsch():
+    avail_sch = {}
+    db = get_db()
     if request.method == 'POST':
-        emp_avail = request.form['starttime_sunday']
+        print (type(session.get('uname')))
+
+        #check to see if the employee already has an availability Schedule
+        db.query("SELECT * FROM Availability WHERE employee_id=?",[int(session.get('uname'))])
+
+        if len(db.fetchdata()) < 0:
+            db.query("INSERT into Availability (`employee_id`,`0`,`1`,`2`,`3`,`4`,`5`,`6`) VALUES (?,?,?,?,?,?,?,?)",
+            [int(session.get('uname')),
+            str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
+            str((request.form['starttime_monday'],request.form['endtime_monday'])),
+            str((request.form['starttime_tuesday'],request.form['endtime_tuesday'])),
+            str((request.form['starttime_wednesday'],request.form['endtime_wednesday'])),
+            str((request.form['starttime_thursday'],request.form['endtime_thursday'])),
+            str((request.form['starttime_friday'],request.form['endtime_friday'])),
+            str((request.form['starttime_saturday'],request.form['endtime_saturday']))])
+            print("insert")
+        else:
+            db.query("UPDATE Availability SET `0` = ?, `1` = ?, `2` = ?, `3` = ?, `4` = ?, `5` = ?, `6` = ? WHERE employee_id = ?",
+            [str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
+            str((request.form['starttime_monday'],request.form['endtime_monday'])),
+            str((request.form['starttime_tuesday'],request.form['endtime_tuesday'])),
+            str((request.form['starttime_wednesday'],request.form['endtime_wednesday'])),
+            str((request.form['starttime_thursday'],request.form['endtime_thursday'])),
+            str((request.form['starttime_friday'],request.form['endtime_friday'])),
+            str((request.form['starttime_saturday'],request.form['endtime_saturday'])),
+            int(session.get('uname'))])
+            print("update")
+
         return redirect(url_for('makeasch'))
 
 @app.route('/hoursworked')
