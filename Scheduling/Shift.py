@@ -62,6 +62,9 @@ class Shift:
     def _get_end(self):
         return self.__end
 
+    def times(self):
+        return self.start, self.end
+
     employeeid = property(_get_employeeid, _set_employeeid)
     start = property(_get_start, _set_start)
     end = property(_get_end, _set_end)
