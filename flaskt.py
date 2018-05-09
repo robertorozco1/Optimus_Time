@@ -13,6 +13,7 @@ import etc
 
 app = Flask(__name__) # create the application instance :)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+applicationdb = database.DebugDatabase()
 
 
 
@@ -22,8 +23,8 @@ class ReusableForm(Form):
     password = TextField('Password :', validators=[validators.required(), validators.Length(min=3, max=35)])
 
 def get_db():
-    g.sqlite_db = database.DebugDatabase()
-    return g.sqlite_db
+        global applicationdb
+        return applicationdb
 
 @app.route('/register')
 def register():

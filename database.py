@@ -3,6 +3,7 @@ import sqlite3
 import pymysql
 import Scheduling
 import pickle
+import sys
 
 
 class Database(abc.ABC):
@@ -30,6 +31,7 @@ class Database(abc.ABC):
 
     def getschedule(self, weekid):
         query = "SELECT schedule FROM Work_Schedule WHERE week_id=&CHAR"
+        print(weekid, sys.stdout)
         self.query(query, (weekid, ))
         blob = self.fetchdata()[0][0]
         schedule = pickle.loads(blob)
@@ -75,7 +77,7 @@ class Database(abc.ABC):
 class DebugDatabase(Database):
 
     def __init__(self, file=":memory:"):
-        self.database = sqlite3.connect(file)
+        self.database = sqlite3.connect(file, check_same_thread=False)
         self.__generate__()
         self.command = None
 
