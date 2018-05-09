@@ -105,17 +105,34 @@ def submitTimeOff():
         request.form['reason']])
     return redirect(url_for('/rto'))
 
-@app.route('/newworkschedule')
-def show_tables():
+@app.route('/viewworkschedule', methods=['GET','POST'])
+def viewschedule():
+    db = get_db()
+    if request.method == 'POST':
+        schedule = database.getschedule(int(request.form['weekid']))
+        for employee in schedule.employeelist():
+            aweek = schedule.week.employeeweek(employee)
+            data.append(aweek.values())
+        employeelist = schedule.employeelist()
+        return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+    return render_template('selectschedule.html')
+
+@app.route('/newworkschedule', methods=['GET','POST'])
+def genschedule():
     db = get_db()
     data = []
     schedule = generateschedule.generateschedule(db)
+
     for employee in schedule.employeelist():
         aweek = schedule.week.employeeweek(employee)
         data.append(aweek.values())
     employeelist = schedule.employeelist()
 
-    return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+    if request.method == 'POST':
+            database.insertschedule(schedule)
+            return redirect(url_for('viewworkschedule'))
+
+    return render_template('generateschedule.html', employee_list=employeelist, the_data=data)
 
 @app.route('/makeasch')
 def makeasch():
