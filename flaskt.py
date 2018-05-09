@@ -170,11 +170,11 @@ def submitsch():
         str((str(request.form['starttime_friday'].replace(":","")),str(request.form['endtime_friday'].replace(":","")))),
         str((str(request.form['starttime_saturday'].replace(":","")),str(request.form['endtime_saturday'].replace(":","")))),
         empID))
-        print("insert")
-        db.query("SELECT * FROM Availability WHERE employee_id=?", (empID, ))
-        print(str((int(request.form['starttime_sunday'].replace(":","")),str(request.form['endtime_sunday'].replace(":","")))))
-        flash('Schedule Updated')
-        print("update")
+        #print("insert")
+        #db.query("SELECT * FROM Availability WHERE employee_id=?", (empID, ))
+        #print(str((int(request.form['starttime_sunday'].replace(":","")),str(request.form['endtime_sunday'].replace(":","")))))
+        #flash('Schedule Updated')
+        #print("update")
         flash('Schedule Updated')
 
         return redirect(url_for('makeasch'))
