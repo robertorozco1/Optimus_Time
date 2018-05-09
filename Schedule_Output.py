@@ -4,6 +4,7 @@ import generateschedule
 import sys
 import Scheduling
 import pickle
+import sqlite3
 app = Flask(__name__)
 
 db = None
@@ -18,8 +19,8 @@ def initializedb():
 def show_tables():
     global db
     schedule = generateschedule.generateschedule(db)
-    a = pickle.dumps(schedule)
-    b = pickle.loads(a)
+    db.insertschedule(schedule)
+    b = db.getschedule(str(schedule.weekid))
     data = []
     for employee in b.employeelist():
         aweek = b.week.employeeweek(employee)

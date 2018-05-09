@@ -29,36 +29,34 @@ class Database(abc.ABC):
         ...
 
     def getschedule(self, weekid):
-        query = "FROM Work_Schedule SELECT schedule WHERE weekid=?"
-        params = (weekid)
-        self.query(query, params)
-        blob = self.fetchdata()
+        query = "SELECT schedule FROM Work_Schedule WHERE week_id=&CHAR"
+        self.query(query, (weekid))
+        blob = self.fetchdata()[0][0]
         schedule = pickle.loads(blob)
         return schedule
 
     def insertschedule(self, schedule: Scheduling.Schedule):
         blob = pickle.dumps(schedule)
-        query = "INSERT INTO Work_Schedule VALUES (?,?)"
-        params = (schedule.weekid, blob)
-        self.query(query, params)
+        query = "REPLACE INTO Work_Schedule VALUES (&CHAR,&CHAR)"
+        self.query(query, (schedule.weekid, blob))
         self.commit()
 
     def updateschedule(self, schedule):
         blob = pickle.dumps(schedule)
-        query = "UPDATE Work_Schedule SET schedule=? WHERE weekid=?"
+        query = "UPDATE Work_Schedule SET schedule=&CHAR WHERE weekid=&CHAR"
         params = (blob, schedule.weekid)
         self.query(query, params)
         self.commit()
 
     def getavailability(self, employeeid, day):
-        query = "SELECT `1` FROM Availability WHERE employee_id=?"
+        query = "SELECT `1` FROM Availability WHERE employee_id=&CHAR"
         params = (day, employeeid)
         self.query(query, params)
         return self.fetchdata()
 
     def insertavailability(self, employeeid, availability):
         # Todo check structure of  availability
-        query = "INSERT INTO Availability VALUES (?,?,?,?,?,?,?,?)"
+        query = "INSERT INTO Availability VALUES (&CHAR,&CHAR,&CHAR,&CHAR,&CHAR,&CHAR,&CHAR,&CHAR)"
         params = (employeeid, *availability)
         self.query(query, params)
         self.commit()
@@ -70,7 +68,7 @@ class Database(abc.ABC):
         if any(days) not in range(0, 7):
             raise ValueError("Days must be in range of 0 to 6")
         for index in range(len(days)):
-            query = "UPDATE Availability SET ?='?' WHERE employee_id='?'"
+            query = "UPDATE Availability SET &CHAR='&CHAR' WHERE employee_id='&CHAR'"
             params = (days[index], availability[index], employeeid)
             self.query(query, params)
             self.commit()
@@ -88,6 +86,7 @@ class DebugDatabase(Database):
         self.database.executescript(schema)
 
     def query(self, query, params=()):
+        query = query.replace("&CHAR", "?")
         self.command = self.database.execute(query, params)
 
     def commit(self):
@@ -108,6 +107,7 @@ class RemoteDatabase(Database):
         self.cursor = self.database.cursor()
 
     def query(self, query, params):
+        query = query.replace("&CHAR", "%s")
         self.command = self.cursor.execute(query, params)
 
     def commit(self):
@@ -123,7 +123,7 @@ class RemoteDatabase(Database):
 class DatabaseInterface:
 
     def __init__(self, debug=True):
-       self.db = DebugDatabase() if debug else RemoteDatabase()
+        self.db = DebugDatabase() if debug else RemoteDatabase()
 
 
 if __name__ == "__main__":
