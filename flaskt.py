@@ -93,13 +93,29 @@ def timeoff():
     else:
         return render_template('timeoff.html')
 
+@app.route('/rto/submit', methods=['GET','POST'])
+def submitTimeOff():
+    db = get_db()
+    if request.method == 'POST':
+        print (session.get('uname'))
+        db.query('INSERT into TimeOff (`employee_id`.`start_date`,`end_date`,`Reason`,`Status`) VALUES (?,?,?,?,NULL)',
+        [int(session.get('uname')),
+        request.form['start_date'],
+        request.form['end_date'],
+        request.form['reason']])
+    return redirect(url_for('/rto'))
+
 @app.route('/newworkschedule')
 def show_tables():
     db = get_db()
+    data = []
     schedule = generateschedule.generateschedule(db)
-    data = schedule.employeeschedule()
+    for employee in schedule.employeelist():
+        aweek = schedule.week.employeeweek(employee)
+        data.append(aweek.values())
+    employeelist = schedule.employeelist()
 
-    return render_template('availabilityview.html', the_data=[[data]])
+    return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
 
 @app.route('/makeasch')
 def makeasch():
@@ -111,7 +127,6 @@ def makeasch():
 
 @app.route('/makeasch/submit/', methods=['GET','POST'])
 def submitsch():
-    avail_sch = {}
     db = get_db()
     if request.method == 'POST':
         print (type(session.get('uname')))
