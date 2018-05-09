@@ -108,8 +108,8 @@ def submitTimeOff():
 def viewschedule():
     db = get_db()
     if request.method == 'POST':
-        #weekid = int(request.form['weekid'])
-        schedule = db.getschedule(request.form['weekid`'])
+        data = []
+        schedule = db.getschedule(str(request.form['weekid']))
         for employee in schedule.employeelist():
             aweek = schedule.week.employeeweek(employee)
             data.append(aweek.values())
@@ -119,9 +119,9 @@ def viewschedule():
 
 @app.route('/newworkschedule', methods=['GET','POST'])
 def genschedule():
-    db = get_db()
     data = []
-    schedule = generateschedule.generateschedule(db)
+    schedule = generateschedule.generateschedule(get_db())
+    print(schedule, sys.stdout)
 
     for employee in schedule.employeelist():
         aweek = schedule.week.employeeweek(employee)
@@ -129,7 +129,7 @@ def genschedule():
     employeelist = schedule.employeelist()
 
     if request.method == 'POST':
-            db.insertschedule(schedule)
+            get_db().insertschedule(schedule)
             return redirect(url_for('viewschedule'))
 
     return render_template('generateschedule.html', employee_list=employeelist, the_data=data)

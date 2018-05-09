@@ -30,7 +30,7 @@ class Database(abc.ABC):
 
     def getschedule(self, weekid):
         query = "SELECT schedule FROM Work_Schedule WHERE week_id=&CHAR"
-        self.query(query, (weekid))
+        self.query(query, (weekid, ))
         blob = self.fetchdata()[0][0]
         schedule = pickle.loads(blob)
         return schedule
