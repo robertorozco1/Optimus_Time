@@ -154,35 +154,28 @@ def submitsch():
     db = get_db()
     if request.method == 'POST':
         print (type(session.get('uname')))
-        print (request.form['starttime_monday'].replace(":",""))
+        empID = int(session.get('uname'))
+        Srt = str(request.form['starttime_sunday'].replace(":",""))
+        print (Srt)
 
         #check to see if the employee already has an availability Schedule
         db.query("SELECT * FROM Availability WHERE employee_id=?",[int(session.get('uname'))])
 
-        if len(db.fetchdata()) < 0:
-            db.query("INSERT into Availability (`employee_id`,`0`,`1`,`2`,`3`,`4`,`5`,`6`) VALUES (?,?,?,?,?,?,?,?)",
-            [str(session.get('uname')),
-            (request.form['starttime_sunday'].replace(":",""),request.form['endtime_sunday'].replace(":","")),
-            (request.form['starttime_monday'].replace(":",""),request.form['endtime_monday'].replace(":","")),
-            (request.form['starttime_tuesday'].replace(":",""),request.form['endtime_tuesday'].replace(":","")),
-            (request.form['starttime_wednesday'].replace(":",""),request.form['endtime_wednesday'].replace(":","")),
-            (request.form['starttime_thursday'].replace(":",""),request.form['endtime_thursday'].replace(":","")),
-            (request.form['starttime_friday'].replace(":",""),request.form['endtime_friday'].replace(":","")),
-            (request.form['starttime_saturday'].replace(":",""),request.form['endtime_saturday'].replace(":",""))])
-            print("insert")
-            flash('Schedule Updated')
-        else:
-            db.query("UPDATE Availability SET `0` = ?, `1` = ?, `2` = ?, `3` = ?, `4` = ?, `5` = ?, `6` = ? WHERE employee_id = ?",
-            [(request.form['starttime_sunday'].replace(":",""),request.form['endtime_sunday'].replace(":","")),
-            (request.form['starttime_monday'].replace(":",""),request.form['endtime_monday'].replace(":","")),
-            (request.form['starttime_tuesday'].replace(":",""),request.form['endtime_tuesday'].replace(":","")),
-            (request.form['starttime_wednesday'].replace(":",""),request.form['endtime_wednesday'].replace(":","")),
-            (request.form['starttime_thursday'].replace(":",""),request.form['endtime_thursday'].replace(":","")),
-            (request.form['starttime_friday'].replace(":",""),request.form['endtime_friday'].replace(":","")),
-            (request.form['starttime_saturday'].replace(":",""),request.form['endtime_saturday'].replace(":","")),
-            str(session.get('uname'))])
-            print("update")
-            flash('Schedule Updated')
+        db.query("REPLACE INTO Availability VALUES (?,?,?,?,?,?,?,?)",
+        (str((str(request.form['starttime_sunday'].replace(":","")),str(request.form['endtime_sunday'].replace(":","")))),
+        str((str(request.form['starttime_monday'].replace(":","")),str(request.form['endtime_monday'].replace(":","")))),
+        str((str(request.form['starttime_tuesday'].replace(":","")),str(request.form['endtime_tuesday'].replace(":","")))),
+        str((str(request.form['starttime_wednesday'].replace(":","")),str(request.form['endtime_wednesday'].replace(":","")))),
+        str((str(request.form['starttime_thursday'].replace(":","")),str(request.form['endtime_thursday'].replace(":","")))),
+        str((str(request.form['starttime_friday'].replace(":","")),str(request.form['endtime_friday'].replace(":","")))),
+        str((str(request.form['starttime_saturday'].replace(":","")),str(request.form['endtime_saturday'].replace(":","")))),
+        empID))
+        print("insert")
+        db.query("SELECT * FROM Availability WHERE employee_id=?", (empID, ))
+        print(str((int(request.form['starttime_sunday'].replace(":","")),str(request.form['endtime_sunday'].replace(":","")))))
+        flash('Schedule Updated')
+        print("update")
+        flash('Schedule Updated')
 
         return redirect(url_for('makeasch'))
 
