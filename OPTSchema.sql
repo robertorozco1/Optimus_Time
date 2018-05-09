@@ -3,7 +3,6 @@ CREATE TABLE `User` (
   `lname` varchar(25) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `hours_week` int(11) NOT NULL,
   `passwd` varchar(128) DEFAULT NULL,
 	PRIMARY KEY (`employee_id`)
 );

@@ -37,8 +37,7 @@ def login():
     if request.method == 'POST':
         pword=request.form['password']
         uname=request.form['uname']
-        db.query("SELECT employee_id, passwd FROM user WHERE employee_id = " + uname)
-        data = db.fetchdata()
+        data = db.login(uname)
         if not data:
             flash("Invalid username")
         else:

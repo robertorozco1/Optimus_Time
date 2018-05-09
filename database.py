@@ -41,12 +41,10 @@ class Database(abc.ABC):
         self.query(query, (schedule.weekid, blob))
         self.commit()
 
-    def updateschedule(self, schedule):
-        blob = pickle.dumps(schedule)
-        query = "UPDATE Work_Schedule SET schedule=&CHAR WHERE weekid=&CHAR"
-        params = (blob, schedule.weekid)
-        self.query(query, params)
-        self.commit()
+    def login(self, uname):
+        query = "SELECT employee_id, passwd FROM user WHERE employee_id =&CHAR"
+        self.query(query, (uname, ))
+        return self.fetchdata()
 
     def getavailability(self, employeeid, day):
         query = "SELECT `1` FROM Availability WHERE employee_id=&CHAR"
