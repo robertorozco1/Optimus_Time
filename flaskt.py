@@ -109,7 +109,7 @@ def viewschedule():
     db = get_db()
     if request.method == 'POST':
         data = []
-        schedule = db.getschedule(str(request.form['weekid']))
+        schedule = db.getschedule(int(request.form['weekid']))
         for employee in schedule.employeelist():
             aweek = schedule.week.employeeweek(employee)
             data.append(aweek.values())
@@ -117,10 +117,15 @@ def viewschedule():
         return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
     return render_template('selectschedule.html')
 
-@app.route('/newworkschedule', methods=['GET','POST'])
+@app.route('/newworkschedule', methods=['POST'])
 def genschedule():
     data = []
+
     schedule = generateschedule.generateschedule(get_db())
+    if request.method == 'POST':
+        print(schedule)
+        get_db().insertschedule(schedule)
+        return redirect(url_for('viewschedule'))
     print(schedule, sys.stdout)
 
     for employee in schedule.employeelist():
@@ -128,9 +133,6 @@ def genschedule():
         data.append(aweek.values())
     employeelist = schedule.employeelist()
 
-    if request.method == 'POST':
-            get_db().insertschedule(schedule)
-            return redirect(url_for('viewschedule'))
 
     return render_template('generateschedule.html', employee_list=employeelist, the_data=data)
 
