@@ -97,13 +97,13 @@ def timeoff():
 def submitTimeOff():
     db = get_db()
     if request.method == 'POST':
-        print (session.get('uname'))
-        db.query('INSERT into TimeOff (`employee_id`.`start_date`,`end_date`,`Reason`,`Status`) VALUES (?,?,?,?,NULL)',
+        print (type(request.form['start_date']))
+        db.query("INSERT into TimeOff (`employee_id`,`start_date`,`end_date`,`Reason`,`Status`) VALUES (?,?,?,?,NULL)",
         [int(session.get('uname')),
         request.form['start_date'],
         request.form['end_date'],
         request.form['reason']])
-    return redirect(url_for('/rto'))
+    return redirect(url_for('timeoff'))
 
 @app.route('/viewworkschedule', methods=['GET','POST'])
 def viewschedule():
@@ -111,14 +111,18 @@ def viewschedule():
     if request.method == 'POST':
         data = []
         schedule = db.getschedule(int(request.form['weekid']))
-        for employee in schedule.employeelist():
-            aweek = schedule.week.employeeweek(employee)
-            data.append(aweek.values())
-        employeelist = schedule.employeelist()
-        return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+        if schedule is None:
+            flash("That week doesn't exist! Please select a different week")
+            return url_for('viewschedule')
+        else:
+            for employee in schedule.employeelist():
+                aweek = schedule.week.employeeweek(employee)
+                data.append(aweek.values())
+            employeelist = schedule.employeelist()
+            return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
     return render_template('selectschedule.html')
 
-@app.route('/newworkschedule', methods=['POST'])
+@app.route('/newworkschedule', methods=['GET','POST'])
 def genschedule():
     data = []
 
@@ -150,49 +154,51 @@ def submitsch():
     db = get_db()
     if request.method == 'POST':
         print (type(session.get('uname')))
+        print (request.form['starttime_monday'].replace(":",""))
 
         #check to see if the employee already has an availability Schedule
         db.query("SELECT * FROM Availability WHERE employee_id=?",[int(session.get('uname'))])
 
         if len(db.fetchdata()) < 0:
             db.query("INSERT into Availability (`employee_id`,`0`,`1`,`2`,`3`,`4`,`5`,`6`) VALUES (?,?,?,?,?,?,?,?)",
-            [int(session.get('uname')),
-            str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
-            str((request.form['starttime_monday'],request.form['endtime_monday'])),
-            str((request.form['starttime_tuesday'],request.form['endtime_tuesday'])),
-            str((request.form['starttime_wednesday'],request.form['endtime_wednesday'])),
-            str((request.form['starttime_thursday'],request.form['endtime_thursday'])),
-            str((request.form['starttime_friday'],request.form['endtime_friday'])),
-            str((request.form['starttime_saturday'],request.form['endtime_saturday']))])
+            [str(session.get('uname')),
+            (request.form['starttime_sunday'].replace(":",""),request.form['endtime_sunday'].replace(":","")),
+            (request.form['starttime_monday'].replace(":",""),request.form['endtime_monday'].replace(":","")),
+            (request.form['starttime_tuesday'].replace(":",""),request.form['endtime_tuesday'].replace(":","")),
+            (request.form['starttime_wednesday'].replace(":",""),request.form['endtime_wednesday'].replace(":","")),
+            (request.form['starttime_thursday'].replace(":",""),request.form['endtime_thursday'].replace(":","")),
+            (request.form['starttime_friday'].replace(":",""),request.form['endtime_friday'].replace(":","")),
+            (request.form['starttime_saturday'].replace(":",""),request.form['endtime_saturday'].replace(":",""))])
             print("insert")
             flash('Schedule Updated')
         else:
             db.query("UPDATE Availability SET `0` = ?, `1` = ?, `2` = ?, `3` = ?, `4` = ?, `5` = ?, `6` = ? WHERE employee_id = ?",
-            [str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
-            str((request.form['starttime_monday'],request.form['endtime_monday'])),
-            str((request.form['starttime_tuesday'],request.form['endtime_tuesday'])),
-            str((request.form['starttime_wednesday'],request.form['endtime_wednesday'])),
-            str((request.form['starttime_thursday'],request.form['endtime_thursday'])),
-            str((request.form['starttime_friday'],request.form['endtime_friday'])),
-            str((request.form['starttime_saturday'],request.form['endtime_saturday'])),
-            int(session.get('uname'))])
+            [(request.form['starttime_sunday'].replace(":",""),request.form['endtime_sunday'].replace(":","")),
+            (request.form['starttime_monday'].replace(":",""),request.form['endtime_monday'].replace(":","")),
+            (request.form['starttime_tuesday'].replace(":",""),request.form['endtime_tuesday'].replace(":","")),
+            (request.form['starttime_wednesday'].replace(":",""),request.form['endtime_wednesday'].replace(":","")),
+            (request.form['starttime_thursday'].replace(":",""),request.form['endtime_thursday'].replace(":","")),
+            (request.form['starttime_friday'].replace(":",""),request.form['endtime_friday'].replace(":","")),
+            (request.form['starttime_saturday'].replace(":",""),request.form['endtime_saturday'].replace(":","")),
+            str(session.get('uname'))])
             print("update")
             flash('Schedule Updated')
 
         return redirect(url_for('makeasch'))
 
-@app.route('/hoursworked')
+@app.route('/hoursworked', methods=['GET','POST'])
 def hoursworked():
+    db = get_db()
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
         if request.method == 'POST':
-            ...
-        else:
-            return render_template('hoursworked.html',
-                                   weeknum=etc.weeknum(),
-                                   schedule=get_db().getschedule(session.get("uname")))
+            schedule = db.getschedule(request.form['weekid'])
+            workweek = schedule.week.employeeweek(int(session.get('uname')))
+            totaltime = schedule.totaltime()
+            return render_template('viewhoursworked.html', week=workweek, total=totaltime)
+    return render_template('selectindividualschedule.html')
 
 
 @app.route('/logout')

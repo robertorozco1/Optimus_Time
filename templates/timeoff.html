@@ -10,10 +10,10 @@
         <div class="w3-third">
             <h5>Pick days off:</h5>
             <form action="{{url_for('submitTimeOff')}}" method="post">
-              <input id="start_date" type="date" label="Start Date">
-              <input id="end_date" type="date" label="End Date">
+              <input id="start_date" type="date" label="Start Date" required>
+              <input id="end_date" type="date" label="End Date" required>
               <p>REASON FOR DAY OFF: </p>
-              <textarea name="reason" rows="4" cols="50">
+              <textarea name="reason" rows="4" cols="50" required>
                   Keep answer brief
               </textarea>
               <input type=submit value=Submit>

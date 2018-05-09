@@ -1,0 +1,7 @@
+{% extends "navbar.html" %}
+{% block body %}
+<form action="{{url_for('hoursworked')}}" method="post">
+  <h1> Input Desired Schedule Week Number: </h1>
+  <input name="weekid" type="number">
+</form>
+{% endblock %}
