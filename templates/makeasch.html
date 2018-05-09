@@ -62,5 +62,8 @@
           <input type=submit value=Submit>
 
     </form>
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    {% endfor %}
 </body>
 {% endblock %}

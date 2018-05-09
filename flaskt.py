@@ -8,8 +8,8 @@ import database
 import generateschedule
 import Scheduling
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-import etc
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+     render_template, flash
 
 app = Flask(__name__) # create the application instance :)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
@@ -104,17 +104,35 @@ def submitTimeOff():
         request.form['reason']])
     return redirect(url_for('/rto'))
 
-@app.route('/newworkschedule')
-def show_tables():
+@app.route('/viewworkschedule', methods=['GET','POST'])
+def viewschedule():
+    db = get_db()
+    if request.method == 'POST':
+        #weekid = int(request.form['weekid'])
+        schedule = db.getschedule(request.form['weekid`'])
+        for employee in schedule.employeelist():
+            aweek = schedule.week.employeeweek(employee)
+            data.append(aweek.values())
+        employeelist = schedule.employeelist()
+        return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+    return render_template('selectschedule.html')
+
+@app.route('/newworkschedule', methods=['GET','POST'])
+def genschedule():
     db = get_db()
     data = []
     schedule = generateschedule.generateschedule(db)
+
     for employee in schedule.employeelist():
         aweek = schedule.week.employeeweek(employee)
         data.append(aweek.values())
     employeelist = schedule.employeelist()
 
-    return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+    if request.method == 'POST':
+            db.insertschedule(schedule)
+            return redirect(url_for('viewschedule'))
+
+    return render_template('generateschedule.html', employee_list=employeelist, the_data=data)
 
 @app.route('/makeasch')
 def makeasch():
@@ -144,6 +162,7 @@ def submitsch():
             str((request.form['starttime_friday'],request.form['endtime_friday'])),
             str((request.form['starttime_saturday'],request.form['endtime_saturday']))])
             print("insert")
+            flash('Schedule Updated')
         else:
             db.query("UPDATE Availability SET `0` = ?, `1` = ?, `2` = ?, `3` = ?, `4` = ?, `5` = ?, `6` = ? WHERE employee_id = ?",
             [str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
@@ -155,15 +174,17 @@ def submitsch():
             str((request.form['starttime_saturday'],request.form['endtime_saturday'])),
             int(session.get('uname'))])
             print("update")
+            flash('Schedule Updated')
 
         return redirect(url_for('makeasch'))
 
-@app.route('/hoursworked', methods=['POST', 'GET'])
+@app.route('/hoursworked')
 def hoursworked():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
+<<<<<<< HEAD
         if request.method == 'POST':
             ...
         else:
@@ -172,6 +193,21 @@ def hoursworked():
                                    schedule=get_db().getschedule(session.get("uname")))
 
 
+=======
+        return render_template('hoursworked.html')
+
+def time_off(employee_id):
+    conn, c = connect()
+    query = ("SELECT status FROM timeoff WHERE employee_id = " + employee_id)
+    c.execute(query)
+    status = c.fetchall()
+    if status == "NULL":
+        return "Pending"
+    elif status == "TRUE":
+        return "Approved"
+    elif status == "FALSE":
+        return "Denied"
+>>>>>>> 6081ca3a9a3a497f972681bad2f08a735381771d
 @app.route ('/logout')
 def logout():
     #pop all session variables and redirect to login

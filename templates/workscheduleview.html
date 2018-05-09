@@ -21,8 +21,8 @@
         <tr>
           <th>{{employee_list[loop.index0]}}</th>
             {% for day in employeeweek %}
-            {% set shifts = day.shifts %}
-              <th>{{shifts.times()}}</th>
+            {% set start,end = day.shifts[0].times() %}
+          <th>{{start}} to {{end}}</th>
             {% endfor %}
         </tr>
         {% endfor %}

@@ -1,0 +1,8 @@
+{% extends "workscheduleview.html" %}
+{% block body %}
+ {{super()}}
+<form action="{{url_for('genschedule')}}" method="post">
+  <button type="submit">Save Schedule</button>
+</form>
+<button><a href="{{url_for('genschedule')}}">Generate New Schedule</a></button>
+{% endblock %}
