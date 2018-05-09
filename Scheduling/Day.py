@@ -7,17 +7,17 @@ class Day:
     def __init__(self, *shifts):
         self.__shifts = None
 
-        shifts = set(shifts)
+        shifts = list(shifts)
         self.shifts = shifts
 
     def __repr__(self):
         return str(self.shifts)
 
     def employeelist(self):
-        employeeset = set()
+        employeelist = list()
         for shift in self.shifts:
-            employeeset.add(shift.employeeid)
-        return list(employeeset)
+            employeelist.append(shift.employeeid)
+        return list(employeelist)
 
     def employeeday(self, employeeid):
         employeeshifts = []
@@ -33,8 +33,8 @@ class Day:
         return totaltime
 
     def _set_shifts(self, shifts):
-        if type(shifts) is not set:
-            raise TypeError("Shifts must be in a set")
+        if type(shifts) is not list:
+            raise TypeError("Shifts must be in a list")
         if any(not isinstance(shift, Shift) for shift in shifts):
             raise TypeError("All values must be of type Shift")
         self.__shifts = shifts

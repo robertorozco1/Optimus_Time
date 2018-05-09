@@ -15,7 +15,7 @@ def generateday(dayid, database: database.Database):
     availabilities = database.fetchdata()
     for entry in availabilities:
         shift = generateshift(entry)
-        day.shifts.add(shift)
+        day.shifts.append(shift)
     return day
 
 def generateshift(entry):
