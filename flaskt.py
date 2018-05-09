@@ -108,7 +108,8 @@ def submitTimeOff():
 def viewschedule():
     db = get_db()
     if request.method == 'POST':
-        schedule = database.getschedule(int(request.form['weekid']))
+        #weekid = int(request.form['weekid'])
+        schedule = db.getschedule(request.form['weekid'])
         for employee in schedule.employeelist():
             aweek = schedule.week.employeeweek(employee)
             data.append(aweek.values())
@@ -128,8 +129,8 @@ def genschedule():
     employeelist = schedule.employeelist()
 
     if request.method == 'POST':
-            database.insertschedule(schedule)
-            return redirect(url_for('viewworkschedule'))
+            db.insertschedule(schedule)
+            return redirect(url_for('viewschedule'))
 
     return render_template('generateschedule.html', employee_list=employeelist, the_data=data)
 
@@ -161,6 +162,7 @@ def submitsch():
             str((request.form['starttime_friday'],request.form['endtime_friday'])),
             str((request.form['starttime_saturday'],request.form['endtime_saturday']))])
             print("insert")
+            flash('Schedule Updated')
         else:
             db.query("UPDATE Availability SET `0` = ?, `1` = ?, `2` = ?, `3` = ?, `4` = ?, `5` = ?, `6` = ? WHERE employee_id = ?",
             [str((request.form['starttime_sunday'],request.form['endtime_sunday'])),
@@ -172,6 +174,7 @@ def submitsch():
             str((request.form['starttime_saturday'],request.form['endtime_saturday'])),
             int(session.get('uname'))])
             print("update")
+            flash('Schedule Updated')
 
         return redirect(url_for('makeasch'))
 
