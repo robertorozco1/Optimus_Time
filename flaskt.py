@@ -167,7 +167,9 @@ def hoursworked():
         if request.method == 'POST':
             ...
         else:
-            return render_template('hoursworked.html', weeknum=etc.weeknum())
+            return render_template('hoursworked.html',
+                                   weeknum=etc.weeknum(),
+                                   schedule=get_db().getschedule(session.get("uname")))
 
 
 @app.route ('/logout')
