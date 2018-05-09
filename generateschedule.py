@@ -1,8 +1,9 @@
 import Scheduling
 import database
+import datetime
 
 def generateschedule(database: database.Database):
-    schedule = Scheduling.Schedule(0)
+    schedule = Scheduling.Schedule(datetime.date.today().isocalendar()[1]*datetime.date.year[0])
     for dayid in schedule.week:
         day = generateday(dayid, database)
         schedule.week[dayid] = day
