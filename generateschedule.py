@@ -1,11 +1,9 @@
 import Scheduling
 import database
-import datetime
+import etc
 
 def generateschedule(database: database.Database):
-    weeknum = str(datetime.date.today().isocalendar()[1])
-    year = str(datetime.date.today().isocalendar()[0])
-    weekid = int(year + weeknum)
+    weekid = etc.weeknum()
     schedule = Scheduling.Schedule(weekid)
     for dayid in schedule.week:
         day = generateday(dayid, database)
