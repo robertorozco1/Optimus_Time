@@ -38,14 +38,14 @@ class Database(abc.ABC):
 
     def insertschedule(self, schedule: Scheduling.Schedule):
         blob = pickle.dumps(schedule)
-        query = "INSERT INTO Work_Schedule VALUES '(?,?)'"
+        query = "INSERT INTO Work_Schedule VALUES (?,?)"
         params = (schedule.weekid, blob)
         self.query(query, params)
         self.commit()
 
     def updateschedule(self, schedule):
         blob = pickle.dumps(schedule)
-        query = "UPDATE Work_Schedule SET schedule='?' WHERE weekid='?'"
+        query = "UPDATE Work_Schedule SET schedule=? WHERE weekid=?"
         params = (blob, schedule.weekid)
         self.query(query, params)
         self.commit()
@@ -58,7 +58,7 @@ class Database(abc.ABC):
 
     def insertavailability(self, employeeid, availability):
         # Todo check structure of  availability
-        query = "INSERT INTO Availability VALUES '(?,?,?,?,?,?,?,?)'"
+        query = "INSERT INTO Availability VALUES (?,?,?,?,?,?,?,?)"
         params = (employeeid, *availability)
         self.query(query, params)
         self.commit()
@@ -83,7 +83,7 @@ class DebugDatabase(Database):
         self.__generate__()
         self.command = None
 
-    def __generate__(self, script="./dummydata.sql"):
+    def __generate__(self, script="./OPTSchema.sql"):
         schema = open(script).read()
         self.database.executescript(schema)
 
@@ -102,7 +102,7 @@ class DebugDatabase(Database):
 
 class RemoteDatabase(Database):
 
-    def __init__(self, host='127.0.0.1', user='root', password='', db='dummydata'):
+    def __init__(self, host='127.0.0.1', user='root', password='', db='OPTSchema'):
         self.database = pymysql.connect(host, user, password, db)
         self.command = None
         self.cursor = self.database.cursor()
