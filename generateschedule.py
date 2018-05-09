@@ -3,7 +3,10 @@ import database
 import datetime
 
 def generateschedule(database: database.Database):
-    schedule = Scheduling.Schedule(datetime.date.today().isocalendar()[1]*datetime.date.year[0])
+    weeknum = str(datetime.date.today().isocalendar()[1])
+    year = str(datetime.date.today().isocalendar()[0])
+    weekid = int(year + weeknum)
+    schedule = Scheduling.Schedule(weekid)
     for dayid in schedule.week:
         day = generateday(dayid, database)
         schedule.week[dayid] = day
