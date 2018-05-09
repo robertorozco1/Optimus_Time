@@ -8,8 +8,8 @@ import database
 import generateschedule
 import Scheduling
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-import etc
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+     render_template, flash
 
 app = Flask(__name__) # create the application instance :)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
@@ -109,7 +109,7 @@ def viewschedule():
     db = get_db()
     if request.method == 'POST':
         #weekid = int(request.form['weekid'])
-        schedule = db.getschedule(request.form['weekid'])
+        schedule = db.getschedule(request.form['weekid`'])
         for employee in schedule.employeelist():
             aweek = schedule.week.employeeweek(employee)
             data.append(aweek.values())
@@ -178,18 +178,25 @@ def submitsch():
 
         return redirect(url_for('makeasch'))
 
-@app.route('/hoursworked', methods=['POST', 'GET'])
+@app.route('/hoursworked')
 def hoursworked():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
-        if request.method == 'POST':
-            ...
-        else:
-            return render_template('hoursworked.html', weeknum=etc.weeknum())
+        return render_template('hoursworked.html')
 
-
+def time_off(employee_id):
+    conn, c = connect()
+    query = ("SELECT status FROM timeoff WHERE employee_id = " + employee_id)
+    c.execute(query)
+    status = c.fetchall()
+    if status == "NULL":
+        return "Pending"
+    elif status == "TRUE":
+        return "Approved"
+    elif status == "FALSE":
+        return "Denied"
 @app.route ('/logout')
 def logout():
     #pop all session variables and redirect to login
