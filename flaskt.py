@@ -8,8 +8,8 @@ import database
 import generateschedule
 import Scheduling
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+import etc
 
 app = Flask(__name__) # create the application instance :)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
@@ -178,25 +178,18 @@ def submitsch():
 
         return redirect(url_for('makeasch'))
 
-@app.route('/hoursworked')
+@app.route('/hoursworked', methods=['POST', 'GET'])
 def hoursworked():
     if not session.get('logged_in'):
         flash('Please Log in')
         return redirect(url_for('login'))
     else:
-        return render_template('hoursworked.html')
+        if request.method == 'POST':
+            ...
+        else:
+            return render_template('hoursworked.html', weeknum=etc.weeknum())
 
-def time_off(employee_id):
-    conn, c = connect()
-    query = ("SELECT status FROM timeoff WHERE employee_id = " + employee_id)
-    c.execute(query)
-    status = c.fetchall()
-    if status == "NULL":
-        return "Pending"
-    elif status == "TRUE":
-        return "Approved"
-    elif status == "FALSE":
-        return "Denied"
+
 @app.route ('/logout')
 def logout():
     #pop all session variables and redirect to login
