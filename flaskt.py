@@ -103,6 +103,8 @@ def submitTimeOff():
         request.form['start_date'],
         request.form['end_date'],
         request.form['reason']])
+    db.query("SELECT * from TimeOff")
+    print (db.fetchdata())
     return redirect(url_for('timeoff'))
 
 @app.route('/viewworkschedule', methods=['GET','POST'])
@@ -110,16 +112,16 @@ def viewschedule():
     db = get_db()
     if request.method == 'POST':
         data = []
-        schedule = db.getschedule(int(request.form['weekid']))
-        if schedule is None:
-            flash("That week doesn't exist! Please select a different week")
-            return url_for('viewschedule')
-        else:
+        try:
+            schedule = db.getschedule(int(request.form['weekid']))
             for employee in schedule.employeelist():
                 aweek = schedule.week.employeeweek(employee)
                 data.append(aweek.values())
             employeelist = schedule.employeelist()
             return render_template('workscheduleview.html', employee_list=employeelist, the_data=data)
+        except IndexError:
+            flash("That week doesn't exist! Please select a different week")
+            return redirect(url_for('viewschedule'))
     return render_template('selectschedule.html')
 
 @app.route('/newworkschedule', methods=['GET','POST'])

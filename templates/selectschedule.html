@@ -4,4 +4,8 @@
   <h1> Input Desired Schedule Week Number: </h1>
   <input name="weekid" type="number">
 </form>
+</div>
+  {% for message in get_flashed_messages() %}
+  <center><h3 class=flash>{{ message }}</center></h3>
+  {% endfor %}
 {% endblock %}
